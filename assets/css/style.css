@@ -1,0 +1,261 @@
+/* ==========================================================================
+   Jozefa Sobkowicz — memorial site styles
+   Palette drawn from the Mary Frye lines quoted on the Messages page:
+   "the sun on ripened grain" — an antique wheat-gold on warm aged paper,
+   deliberately quiet so the photographs and words carry the page.
+   ========================================================================== */
+
+:root {
+  --paper:      #FBF8F2;  /* warm aged-paper background */
+  --paper-deep: #F3ECDE;  /* slightly deeper panel tone */
+  --ink:        #2B2622;  /* warm near-black for text   */
+  --ink-soft:   #6E665B;  /* muted secondary text       */
+  --gold:       #A9843F;  /* antique wheat-gold accent  */
+  --gold-soft:  #C9AE73;  /* lighter gold for hairlines */
+  --rule:       #E5DCC9;  /* soft divider color         */
+
+  --measure: 34rem;                 /* comfortable reading width */
+  --display: "Fraunces", Georgia, "Times New Roman", serif;
+  --body:    "Lora", Georgia, "Times New Roman", serif;
+}
+
+/* ---- Reset-ish -------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.15rem;      /* large & readable for an older audience */
+  line-height: 1.75;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--gold); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+a:hover { color: var(--ink); }
+
+/* Visible keyboard focus everywhere. */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: absolute; left: -999px; top: 0;
+  background: var(--ink); color: var(--paper);
+  padding: 0.5rem 1rem; z-index: 100;
+}
+.skip-link:focus { left: 0.5rem; top: 0.5rem; }
+
+/* ---- Header & nav ---------------------------------------------------- */
+.site-header {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2.4rem 1.5rem 1.6rem;
+  text-align: center;
+  border-bottom: 1px solid var(--rule);
+}
+.site-title {
+  display: inline-block;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 1.9rem;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  text-decoration: none;
+  margin-bottom: 1rem;
+}
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.4rem 2rem;
+  font-family: var(--body);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+.site-nav a { color: var(--ink-soft); text-decoration: none; }
+.site-nav a:hover { color: var(--gold); }
+.site-nav a[aria-current="page"] { color: var(--gold); }
+
+/* ---- Main / prose ---------------------------------------------------- */
+.site-main { max-width: 60rem; margin: 0 auto; padding: 3.5rem 1.5rem 2rem; }
+
+.prose { max-width: var(--measure); margin: 0 auto; }
+.prose p { margin: 0 0 1.4rem; }
+.page-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 2.1rem;
+  text-align: center;
+  margin: 0 0 2rem;
+}
+
+/* A centered gold hairline used as a gentle divider. */
+.rule {
+  width: 4rem; height: 1px; border: 0;
+  background: var(--gold-soft);
+  margin: 2.2rem auto;
+}
+
+/* ---- Home / hero ----------------------------------------------------- */
+.hero { text-align: center; padding: 1.5rem 0 0.5rem; }
+.hero-name {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  line-height: 1.1;
+  margin: 0;
+}
+.hero-dates {
+  font-family: var(--body);
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 1.15rem;
+  margin: 0.9rem 0 0;
+}
+.hero-lede {
+  max-width: var(--measure);
+  margin: 2rem auto 0;
+  text-align: center;
+  color: var(--ink);
+}
+
+/* Featured photos on the home page. */
+.featured {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+  max-width: 48rem;
+  margin: 2.6rem auto 1.2rem;
+}
+.featured img {
+  width: 100%; height: 100%;
+  object-fit: cover; aspect-ratio: 3 / 2;
+  border: 1px solid var(--rule);
+  filter: saturate(0.96);
+}
+.center-link { text-align: center; margin-top: 1.6rem; }
+.center-link a {
+  font-family: var(--body);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.82rem;
+}
+
+/* ---- Photo gallery --------------------------------------------------- */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.6rem;
+  max-width: 60rem;
+  margin: 0 auto;
+}
+.gallery a { display: block; line-height: 0; }
+.gallery img {
+  width: 100%; aspect-ratio: 1 / 1; object-fit: cover;
+  border: 1px solid var(--rule);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.gallery a:hover img { opacity: 0.86; transform: scale(1.01); }
+.gallery-empty {
+  text-align: center; color: var(--ink-soft);
+  font-style: italic; padding: 3rem 1rem;
+}
+
+/* ---- Messages / tributes --------------------------------------------- */
+.messages { max-width: 40rem; margin: 0 auto; }
+.message {
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.message:first-of-type { padding-top: 0.5rem; }
+.message:last-of-type { border-bottom: 0; }
+.message-meta {
+  font-family: var(--body);
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin-bottom: 0.8rem;
+}
+.message-name {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 1.25rem;
+  color: var(--ink);
+  display: block;
+  line-height: 1.3;
+}
+.message-detail { font-style: italic; }
+.message-body { white-space: pre-line; margin: 0; }        /* keeps line breaks from the data file */
+.message-translation {
+  white-space: pre-line;
+  margin: 1rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px dotted var(--rule);
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+}
+
+/* A quiet call-to-action box for leaving a new tribute. */
+.tribute-invite {
+  max-width: 40rem;
+  margin: 0 auto 2.5rem;
+  padding: 1.8rem 1.6rem;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule);
+  text-align: center;
+}
+.tribute-invite p { margin: 0 0 1rem; }
+.tribute-invite p:last-child { margin-bottom: 0; }
+
+/* Simple contact form (only shown if a Formspree endpoint is configured). */
+.tribute-form { max-width: 40rem; margin: 0 auto 3rem; }
+.tribute-form label { display: block; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin: 1rem 0 0.35rem; }
+.tribute-form input, .tribute-form textarea {
+  width: 100%; padding: 0.7rem 0.8rem;
+  font-family: var(--body); font-size: 1rem;
+  background: var(--paper); color: var(--ink);
+  border: 1px solid var(--rule);
+}
+.tribute-form textarea { min-height: 8rem; resize: vertical; }
+.btn {
+  display: inline-block; margin-top: 1.3rem;
+  font-family: var(--body); font-size: 0.82rem;
+  text-transform: uppercase; letter-spacing: 0.14em;
+  background: var(--ink); color: var(--paper);
+  border: 0; padding: 0.8rem 1.8rem; cursor: pointer;
+}
+.btn:hover { background: var(--gold); color: var(--paper); }
+
+/* ---- Footer ---------------------------------------------------------- */
+.site-footer {
+  max-width: 60rem;
+  margin: 3rem auto 0;
+  padding: 2rem 1.5rem 3rem;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+}
+.site-footer .site-nav { margin-bottom: 1.2rem; }
+.footer-note { font-size: 0.85rem; color: var(--ink-soft); margin: 0; }
+.footer-note a { color: var(--ink-soft); }
+.footer-note a:hover { color: var(--gold); }
+
+/* ---- Small screens --------------------------------------------------- */
+@media (max-width: 480px) {
+  body { font-size: 1.08rem; }
+  .featured { grid-template-columns: 1fr; }
+  .gallery { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+}
+
+/* ---- Gentle load-in, disabled for reduced-motion users --------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .hero, .prose, .page-title { animation: rise 0.7s ease both; }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: none; }
+  }
+}

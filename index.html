@@ -1,0 +1,32 @@
+---
+layout: default
+title: Home
+description: In loving memory of Jozefa Sobkowicz, February 25, 1935 – March 1, 2019.
+---
+
+<section class="hero">
+  <h1 class="hero-name">Jozefa Sobkowicz</h1>
+  <p class="hero-dates">{{ site.tagline }}</p>
+  <p class="hero-lede">
+    A kind, humble and compassionate woman whose smile lit up the room, and to
+    whom the most important thing in the world was her family. Here we remember her.
+  </p>
+</section>
+
+<hr class="rule">
+
+{% comment %}
+  Featured photos: drop 4 images into assets/img/featured/ and they appear here
+  automatically, in filename order. If the folder is empty, nothing is shown.
+{% endcomment %}
+{% assign featured = site.static_files | where_exp: "f", "f.path contains '/assets/img/featured/'" | where_exp: "f", "f.extname == '.jpg' or f.extname == '.jpeg' or f.extname == '.png' or f.extname == '.webp' or f.extname == '.gif'" | sort: "name" %}
+{% if featured.size > 0 %}
+  <div class="featured">
+    {% for photo in featured %}
+      <img src="{{ photo.path | relative_url }}" alt="Jozefa Sobkowicz" loading="lazy">
+    {% endfor %}
+  </div>
+  <p class="center-link"><a href="{{ '/photos/' | relative_url }}">See all photos &rarr;</a></p>
+{% else %}
+  <p class="center-link"><a href="{{ '/photos/' | relative_url }}">See the photos &rarr;</a></p>
+{% endif %}

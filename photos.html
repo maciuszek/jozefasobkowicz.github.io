@@ -1,0 +1,47 @@
+---
+layout: default
+title: Photos
+permalink: /photos/
+description: Photographs of Jozefa Sobkowicz.
+---
+
+{% comment %}
+  The gallery builds itself from image files. Drop full-size photos into
+  assets/img/photos/full/ and (optionally) matching thumbnails into
+  assets/img/photos/thumbs/. NextGEN exports name thumbs "thumbs_<name>.jpg";
+  this template pairs them automatically and falls back to the full image if a
+  thumbnail is missing.
+{% endcomment %}
+
+{% assign fulls  = site.static_files | where_exp: "f", "f.path contains '/assets/img/photos/full/'" | where_exp: "f", "f.extname == '.jpg' or f.extname == '.jpeg' or f.extname == '.png' or f.extname == '.webp' or f.extname == '.gif'" | sort: "name" %}
+{% assign thumbs = site.static_files | where_exp: "f", "f.path contains '/assets/img/photos/thumbs/'" %}
+
+{% if fulls.size > 0 %}
+  <div class="gallery">
+    {% for photo in fulls %}
+      {% assign thumb_name = 'thumbs_' | append: photo.name %}
+      {% assign match = thumbs | where: "name", thumb_name %}
+      {% if match.size > 0 %}
+        {% assign thumb_src = match[0].path %}
+      {% else %}
+        {% assign thumb_src = photo.path %}
+      {% endif %}
+      <a href="{{ photo.path | relative_url }}" class="glightbox" data-gallery="jozefa">
+        <img src="{{ thumb_src | relative_url }}" alt="" loading="lazy">
+      </a>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="gallery-empty">Photographs will appear here once they are added.</p>
+{% endif %}
+
+<!-- GLightbox: lightweight, dependency-free, keyboard + swipe accessible. -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+<script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    if (window.GLightbox) {
+      GLightbox({ selector: '.glightbox', loop: true });
+    }
+  });
+</script>

@@ -1,0 +1,12 @@
+<footer class="site-footer">
+  <nav class="site-nav" aria-label="Footer">
+    <a href="{{ '/' | relative_url }}">Home</a>
+    <a href="{{ '/about/' | relative_url }}">About</a>
+    <a href="{{ '/photos/' | relative_url }}">Photos</a>
+    <a href="{{ '/blog/' | relative_url }}">Messages</a>
+  </nav>
+  <p class="footer-note">
+    Maintained by <a href="mailto:{{ site.contact_email }}">{{ site.maintainer }}</a>
+    &middot; In loving memory of {{ site.title }}
+  </p>
+</footer>

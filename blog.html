@@ -1,0 +1,42 @@
+---
+layout: default
+title: Messages
+permalink: /blog/
+description: Messages and tributes from loved ones remembering Jozefa Sobkowicz.
+---
+
+<h1 class="page-title">Messages From Loved Ones</h1>
+
+<div class="tribute-invite">
+  <p>The words below were shared by family and friends across Canada, Poland and Ukraine.</p>
+  <p>If you would like to add a memory of Jozefa, please write to
+    <a href="mailto:{{ site.contact_email }}?subject=A%20memory%20of%20Jozefa">{{ site.contact_email }}</a>
+    and it will be added here.</p>
+</div>
+
+{% if site.messages_display == "static" or site.messages_display == "both" %}
+  <div class="messages">
+    {% for m in site.data.messages %}
+      <div class="message">
+        <p class="message-meta">
+          <span class="message-name">{{ m.name }}</span>
+          {% if m.relation or m.location or m.date %}
+            <span class="message-detail">
+              {%- if m.relation %}{{ m.relation }}{% endif -%}
+              {%- if m.location %}{% if m.relation %} &middot; {% endif %}{{ m.location }}{% endif -%}
+              {%- if m.date %}{% if m.relation or m.location %} &middot; {% endif %}{{ m.date }}{% endif -%}
+            </span>
+          {% endif %}
+        </p>
+        <p class="message-body">{{ m.body }}</p>
+        {% if m.translation %}
+          <p class="message-translation">{{ m.translation }}</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% if site.messages_display == "giscus" or site.messages_display == "both" %}
+  {% include giscus.html %}
+{% endif %}

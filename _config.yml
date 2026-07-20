@@ -1,0 +1,53 @@
+# ---------------------------------------------------------------------------
+# Site settings for jozefasobkowicz.com
+# Edit the values below; most of the time you'll only touch "title" or "email".
+# After ANY change to this file, the site must rebuild before changes show.
+# ---------------------------------------------------------------------------
+
+title: "Jozefa Sobkowicz"
+tagline: "February 25, 1935 – March 1, 2019"
+description: "In loving memory of Jozefa Sobkowicz."
+
+# The public web address of the finished site.
+url: "https://www.jozefasobkowicz.com"
+
+# The email that the "leave a tribute" link and footer point to.
+contact_email: "mattkuzminski@gmail.com"
+maintainer: "Matthew Kuzminski"
+
+# --- Messages page behaviour ------------------------------------------------
+# How the tributes on /blog/ are shown:
+#   "static" = the curated list from _data/messages.yml (attribution preserved)
+#   "giscus" = a live GitHub-Discussions comment thread (lock it to disable)
+#   "both"   = static list first, then a Giscus thread below it
+messages_display: "static"
+
+# Giscus settings. Only used when messages_display is "giscus" or "both".
+# Fill these in from https://giscus.app after enabling Discussions on the repo.
+giscus:
+  repo: ""              # e.g. "mattkuzminski/jozefasobkowicz"
+  repo_id: ""           # from giscus.app
+  category: "General"
+  category_id: ""       # from giscus.app
+  mapping: "pathname"
+  reactions_enabled: "1"
+  theme: "light"
+  lang: "en"
+
+# ---------------------------------------------------------------------------
+# Build settings — you normally don't need to change anything below this line.
+# ---------------------------------------------------------------------------
+markdown: kramdown
+permalink: pretty
+timezone: America/Toronto
+
+# The photo gallery reads image files directly out of these folders, so
+# they must NOT be excluded from the build.
+include:
+  - assets
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
