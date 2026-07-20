@@ -20,7 +20,12 @@ maintainer: "Matthew Kuzminski"
 #   "static" = the curated list from _data/messages.yml (attribution preserved)
 #   "giscus" = a live GitHub-Discussions comment thread (lock it to disable)
 #   "both"   = static list first, then a Giscus thread below it
-messages_display: "static"
+#
+# Set to "giscus": the tributes live in a GitHub Discussion on THIS repo, seeded
+# from your account (see HANDOFF-PROMPT.md), then the discussion is locked to stop
+# new posts. The curated list in _data/messages.yml is kept as the paste-source
+# and a text backup; it is not displayed while this is "giscus".
+messages_display: "giscus"
 
 # Giscus settings. Only used when messages_display is "giscus" or "both".
 # Fill these in from https://giscus.app after enabling Discussions on the repo.
@@ -48,6 +53,13 @@ include:
 
 exclude:
   - README.md
+  - HANDOFF-PROMPT.md
   - Gemfile
   - Gemfile.lock
   - vendor
+  - originals        # full-resolution archive: versioned for backup, NOT served
+
+# FUTURE (object storage): if you later move photos to S3 / Cloudflare R2, set a
+# base URL here and switch the gallery to a manifest (see README). Left blank now
+# so the gallery scans the local assets folders.
+# photos_base_url: ""

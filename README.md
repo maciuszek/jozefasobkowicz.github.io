@@ -49,14 +49,10 @@ Your gallery is the NextGEN Gallery plugin. The images live on the server at:
 - Thumbnails: `/wp-content/gallery/photos/thumbs/thumbs_*.jpg`
 
 Get them via **SFTP / GoDaddy File Manager** (most reliable): download the whole
-`wp-content/gallery/photos/` folder. Then:
-
-- Put the full-size `*.jpg` into `assets/img/photos/full/`
-- Put the `thumbs_*.jpg` into `assets/img/photos/thumbs/`
-- Copy 4 favourites into `assets/img/featured/`
-
-Consider compressing the full-size scans (e.g. to ~1600px, quality ~82) so the
-repo stays lean and the site loads fast. See the handoff prompt for a one-liner.
+`wp-content/gallery/photos/` folder. Save the untouched full-size files into
+`originals/` (your archive — see "Images" below), then generate served copies
+into `assets/img/photos/full/` and `assets/img/photos/thumbs/`. The handoff
+prompt has the exact, non-destructive commands.
 
 ### 3. The text
 The About page and all tribute messages have already been transcribed into this
@@ -65,23 +61,60 @@ against the original once.
 
 ---
 
-## Messages: static list vs. Giscus
+## Messages (Giscus)
 
-Controlled by `messages_display` in `_config.yml`: `static` (default), `giscus`,
-or `both`.
+`messages_display` in `_config.yml` is set to `giscus`. The tributes live in a
+GitHub **Discussion on this same repository** (no second repo needed), seeded
+from your account and then locked so no new comments can be posted. Setup:
 
-- **static** — the curated list in `_data/messages.yml`. Preserves each sender's
-  name, relation and city. No accounts, no spam. Recommended for the existing
-  messages.
-- **giscus** — a live GitHub-Discussions thread. To set up:
-  1. Make the repo **public**, then enable **Settings → Discussions**.
-  2. Install the Giscus app: https://github.com/apps/giscus
-  3. Go to https://giscus.app, enter the repo, pick a category, and copy the
-     `repo`, `repo_id`, `category`, and `category_id` values into `_config.yml`.
-  4. Set `messages_display: giscus` (or `both`).
-  5. Seed your recreation comments, then **lock the discussion** in GitHub to
-     disable new posting while keeping everything visible. The email invite at
-     the top of the page points new contributors to you.
+1. Make the repo **public**, then enable **Settings → Discussions**.
+2. Install the Giscus app: https://github.com/apps/giscus
+3. At https://giscus.app, enter the repo, pick a category, and copy the `repo`,
+   `repo_id`, `category`, and `category_id` values into the `giscus:` block in
+   `_config.yml`.
+4. Open `/blog/`, and post each tribute from `_data/messages.yml` as a comment.
+   Start each with a bold attribution line so the sender is credited even though
+   the comment is from your account, e.g.:
+
+   > **Dianne Parwicki — Family friend, Etobicoke · March 4, 2019**
+   >
+   > Dear Bozena and family, ...
+
+5. When all are posted, **lock the Discussion** in GitHub. Comments stay visible;
+   new posting is disabled. The email invite at the top of `/blog/` points future
+   contributors to you.
+
+`_data/messages.yml` stays in the repo as your paste-source and a text backup.
+(If you ever want the built-in static list back, set `messages_display: static`.)
+
+---
+
+## Images: quality, sizes, storage, limits
+
+Two separate things — don't conflate them:
+
+- **Originals** (`originals/`) — full-resolution scans kept **byte-for-byte**,
+  never re-encoded. This is your quality-at-rest archive. It's git-tracked for
+  backup but **excluded from the built site** (see `exclude:` in `_config.yml`),
+  so it never counts toward the served-site limit or gets sent to visitors.
+- **Derivatives** (`assets/img/photos/`) — the copies the site serves:
+  `full/` (~2560px, for the lightbox) and `thumbs/` (~600px squares, for the
+  grid). Sharp on any screen, fast to load.
+
+**GitHub limits (confirmed):** a published Pages site must be **≤ 1 GB**; source
+repos have a **recommended 1 GB** soft limit; bandwidth is a soft **100 GB/month**;
+individual files are capped at **100 MB**. Optimized derivatives for ~200 photos
+sit far under these. Originals only affect repo size (soft), not the served site.
+
+**Do not use Git LFS** for images here — GitHub Pages cannot serve LFS files (it
+returns the pointer, not the image).
+
+**Object storage (future).** GitHub has no general object-store/CDN product for
+this. If the archive grows or you want lossless display without the 1 GB Pages
+ceiling, move images to **AWS S3** or **Cloudflare R2** (R2 has no egress fees).
+Then set `photos_base_url` in `_config.yml` and switch the gallery from folder-
+scanning to a small `_data/photos.yml` manifest listing filenames + captions.
+Nothing in the current setup blocks this move.
 
 ---
 
