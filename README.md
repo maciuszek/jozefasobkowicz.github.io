@@ -45,71 +45,14 @@ those folders — no list to maintain.
 
 ---
 
-## Getting your content off WordPress
-
-### 1. Back everything up first
-In GoDaddy, take a full backup (files + database) **before** cancelling hosting.
-Also, in WordPress: **Tools → Export → All content** to download the WXR `.xml`
-(this holds your pages/posts text as a safety copy). Do not cancel hosting until
-the new site is live and verified.
-
-### 2. The photos (the important part)
-Your gallery is the NextGEN Gallery plugin. The images live on the server at:
-
-- Full size: `/wp-content/gallery/photos/*.jpg`
-- Thumbnails: `/wp-content/gallery/photos/thumbs/thumbs_*.jpg`
-
-Get them via **SFTP / GoDaddy File Manager** (most reliable): download the whole
-`wp-content/gallery/photos/` folder. Save the untouched full-size files into
-`originals/` (your archive — see "Images" below), then generate served copies
-into `assets/img/photos/full/` and `assets/img/photos/thumbs/`. The handoff
-prompt has the exact, non-destructive commands.
-
-### 3. The text
-The About page and all tribute messages have already been transcribed into this
-repo (`about.md`, `_data/messages.yml`). Proofread the Polish/Ukrainian entries
-against the original once.
-
----
-
-## Messages (Giscus)
-
-`messages_display` in `_config.yml` is set to `giscus`. The tributes live in a
-GitHub **Discussion on this same repository** (no second repo needed), seeded
-from your account and then locked so no new comments can be posted. Setup:
-
-1. Make the repo **public**, then enable **Settings → Discussions**.
-2. Install the Giscus app: https://github.com/apps/giscus
-3. At https://giscus.app, enter the repo, pick a category, and copy the `repo`,
-   `repo_id`, `category`, and `category_id` values into the `giscus:` block in
-   `_config.yml`.
-4. Open `/blog/`, and post each tribute from `_data/messages.yml` as a comment.
-   Start each with a bold attribution line so the sender is credited even though
-   the comment is from your account, e.g.:
-
-   > **Dianne Parwicki — Family friend, Etobicoke · March 4, 2019**
-   >
-   > Dear Bozena and family, ...
-
-5. When all are posted, **lock the Discussion** in GitHub. Comments stay visible;
-   new posting is disabled. The email invite at the top of `/blog/` points future
-   contributors to you.
-
-`_data/messages.yml` stays in the repo as your paste-source and a text backup.
-(If you ever want the built-in static list back, set `messages_display: static`.)
-
----
-
 ## Images: quality, sizes, storage, limits
 
 Two separate things — don't conflate them:
 
-- **Originals** (`originals/`) — full-resolution scans kept **byte-for-byte**,
-  never re-encoded. This is your quality-at-rest archive. It is **git-ignored**
-  (see `.gitignore` and `originals/README.txt`): the folder lives on your
-  machine only. Back it up outside git — an external drive, cloud storage
-  (iCloud / Drive / Dropbox), or later object storage (see below). Git is a
-  poor archive for hundreds of MB of unversionable binaries.
+- **Originals** (`originals/`) — full-resolution scans kept byte-for-byte,
+  never re-encoded. Git-ignored and lives on your machine only; see
+  [`originals/README.txt`](originals/README.txt) for the archive policy and
+  backup options.
 - **Derivatives** (`assets/img/photos/`) — the copies the site serves:
   `full/` (~2560px, for the lightbox) and `thumbs/` (~600px squares, for the
   grid). Sharp on any screen, fast to load. **These are committed** so the
@@ -159,25 +102,17 @@ script; the home page just picks up whatever is there.
 
 ---
 
-## Deploying to GitHub Pages
+## Operational docs
 
-1. Push this repo to GitHub (branch `main`), repo **public**.
-2. **Settings → Pages → Build and deployment → Source: GitHub Actions.**
-3. The included workflow (`.github/workflows/jekyll.yml`) builds and deploys on
-   every push. Watch progress under the **Actions** tab.
+Everything platform-side lives in standalone docs so this README stays focused
+on building and using the repo:
 
-## Custom domain (do this last, after the site works)
+- **[docs/github-runbook.md](docs/github-runbook.md)** — repo, Pages, Actions
+  build, Discussions, Giscus. Setup + ongoing maintenance + handoff.
+- **[docs/dns-runbook.md](docs/dns-runbook.md)** — custom domain, GoDaddy DNS
+  records, HTTPS, annual renewal, email-hosting decisions.
+- **[docs/godaddy-migration.md](docs/godaddy-migration.md)** — one-time
+  historical record of the WordPress → Jekyll migration.
 
-1. **Settings → Pages → Custom domain:** enter `jozefasobkowicz.com`, Save.
-   (The `CNAME` file in this repo already sets this too.)
-2. In **GoDaddy DNS**, point the domain at GitHub Pages:
-   - Four `A` records for the apex `@` →
-     `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-   - One `CNAME` for `www` → `<your-github-username>.github.io`
-3. Back in **Settings → Pages**, tick **Enforce HTTPS** once the certificate is
-   issued (can take up to a few hours).
-4. Only after the new site resolves correctly, cancel the GoDaddy **hosting**
-   plan. Keep the **domain registration**.
-
-> Note: GitHub Pages IP addresses can change over time — confirm the current apex
-> `A` records in GitHub's Pages docs before editing DNS.
+Comments on `/blog/` are backed by GitHub Discussions via Giscus — see the
+GitHub runbook for setup.

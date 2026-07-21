@@ -19,3 +19,7 @@ Thumbs.db
 # ("Images: quality, sizes, storage, limits") and originals/README.txt.
 originals/
 !originals/README.txt
+
+# Raw NextGEN gallery dump from GoDaddy — 710 MB, the migration source.
+# Keep locally as a backup of record (see docs/godaddy-migration.md).
+photos.zip
