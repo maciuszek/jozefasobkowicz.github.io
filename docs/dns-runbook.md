@@ -53,11 +53,14 @@ Before touching DNS:
 
 ---
 
-## 2. Add the custom domain to GitHub Pages
+## 2. Confirm the custom domain in GitHub Pages
 
-1. **Settings → Pages → Custom domain:** enter `jozefasobkowicz.com`,
-   click Save. (The [CNAME](../CNAME) file pins this value; the UI syncs
-   from the file after each Pages deploy.)
+1. **Settings → Pages → Custom domain:** should already show
+   `jozefasobkowicz.com` — GitHub auto-populates this from the
+   [CNAME](../CNAME) file on the first Pages deploy. If for any reason
+   it's blank, enter the value and click Save; on the next deploy it
+   re-syncs from `CNAME` (see [CNAME file drift](#cname-file-drift)
+   in Ongoing maintenance below).
 2. GitHub starts a DNS check that fails until Step 3 completes.
 3. Do NOT enable HTTPS yet — it needs DNS working first.
 
