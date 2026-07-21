@@ -13,3 +13,9 @@ vendor/
 # OS cruft
 .DS_Store
 Thumbs.db
+
+# Full-resolution photo archive — kept locally, backed up outside git.
+# The site only serves derivatives in assets/img/photos/. See README.md
+# ("Images: quality, sizes, storage, limits") and originals/README.txt.
+originals/
+!originals/README.txt

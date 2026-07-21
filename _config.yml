@@ -58,6 +58,7 @@ exclude:
   - Gemfile.lock
   - vendor
   - originals        # full-resolution archive: versioned for backup, NOT served
+  - scripts          # local tooling (rebuild-photos.sh); not served
 
 # FUTURE (object storage): if you later move photos to S3 / Cloudflare R2, set a
 # base URL here and switch the gallery to a manifest (see README). Left blank now
