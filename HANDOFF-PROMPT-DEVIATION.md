@@ -48,13 +48,13 @@ Checklist below is in actual execution order.
 
 Canonical: [github-runbook.md § 1–2](docs/github-runbook.md#1-create-the-public-repo-and-push).
 
-- [ ] 👤 Create a **public** repo on github.com. Do NOT initialize with
+- [✓] 👤 Create a **public** repo on github.com. Do NOT initialize with
       README/.gitignore/license — we have all three.
-- [ ] 👤 Locally: `git branch -m master main`, `git remote add origin …`,
+- [✓] 👤 Locally: `git branch -m master main`, `git remote add origin …`,
       `git push -u origin main`.
-- [ ] 👤 **Settings → Pages → Source: GitHub Actions.**
-- [ ] 👤 Watch the **Actions** tab; first build takes 1–2 min.
-- [ ] 👤 Walk the temp `*.github.io` URL: `/`, `/about/`, `/photos/`,
+- [✓] 👤 **Settings → Pages → Source: GitHub Actions.**
+- [✓] 👤 Watch the **Actions** tab; first build takes 1–2 min.
+- [✓] 👤 Walk the temp `*.github.io` URL: `/`, `/about/`, `/photos/`,
       `/blog/` all render. `/blog/` will show the Giscus placeholder —
       expected.
 
@@ -62,17 +62,17 @@ Canonical: [github-runbook.md § 1–2](docs/github-runbook.md#1-create-the-publ
 
 Canonical: [github-runbook.md § 3–4](docs/github-runbook.md#3-enable-discussions).
 
-- [ ] 👤 **Settings → General → Features → Discussions:** enable.
-- [ ] 👤 Create a category — recommended: **Tributes**, format
+- [✓] 👤 **Settings → General → Features → Discussions:** enable.
+- [✓] 👤 Create a category — recommended: **Tributes**, format
       **Announcement**.
-- [ ] 👤 Install the Giscus app: https://github.com/apps/giscus →
+- [✓] 👤 Install the Giscus app: https://github.com/apps/giscus →
       grant access to this repo only.
-- [ ] 👤 At https://giscus.app, configure repo + category (mapping =
+- [✓] 👤 At https://giscus.app, configure repo + category (mapping =
       pathname) and copy the four values: `repo`, `repo_id`, `category`,
       `category_id`.
-- [ ] 🤖 Paste those four values into [_config.yml](_config.yml)'s
+- [✓] 🤖 Paste those four values into [_config.yml](_config.yml)'s
       `giscus:` block; commit + push. Actions redeploys.
-- [ ] 👤 Reload `/blog/` — the Giscus widget replaces the placeholder.
+- [✓] 👤 Reload `/blog/` — the Giscus widget replaces the placeholder.
 
 ### C. Seed and lock the tribute thread (original Task 6 cont'd)
 
