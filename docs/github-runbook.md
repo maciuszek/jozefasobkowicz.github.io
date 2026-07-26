@@ -199,27 +199,35 @@ it's not displayed while `messages_display: giscus`, but it's the archive.
 
 ---
 
-## 6. Lock the discussion
+## 6. Moderation posture (Announcement category)
 
-**This is the intended steady state for the site (phase 1).** The Giscus widget
-on `/tributes/` should render the seeded tributes but accept no new comments —
-avoiding spam and keeping the memorial thread stable. Do not skip this step.
+**The Discussion category is `Announcement` — this is the primary
+protection.** Only maintainers can create new threads in the category, so
+non-maintainers can't spawn parallel tribute threads. The single existing
+thread (auto-created by Giscus for `/tributes/`) is where all seeded
+comments live and where any future replies would land.
 
-Once every tribute is posted:
+**On per-thread `Lock conversation`:** in the current GitHub UI, a
+`Lock conversation` option is not reliably discoverable at the thread
+level for Announcement-category discussions. That's OK — the accepted
+posture for this site is:
 
-- **If the category is Announcement:** already restricted — non-maintainers
-  can't start threads, but they may still be able to reply on the existing
-  thread. To also stop replies: open the thread → **⋯ → Lock conversation.**
-- **If the category is General:** open the thread → **⋯ → Lock conversation**
-  for every seeded thread.
+- Sign-in friction (GitHub sign-in + Giscus OAuth) filters most bot spam.
+- Any unwanted reply from a signed-in visitor can be deleted directly on
+  GitHub (Discussion → the comment → ⋯ → *Delete*).
+- No thread lock means signed-in visitors CAN legitimately add a tribute
+  reply if they choose — a small back-door contribution path that fits a
+  memorial's intent.
 
-Comments stay readable; no one can post new ones. Future contributors are
-directed via the "email a tribute" banner on `/tributes/` (see `contact_email`
-in `_config.yml`).
+If bot spam ever becomes a real problem: look for a `Lock` option in the
+thread's top-right kebab menu (⋯, at the discussion header — not any
+comment-level menu). If GitHub eventually exposes it, use it. Failing
+that, restricting the category to a more locked-down configuration is
+the escalation.
 
 **Verification:**
-- [ ] Thread(s) show "🔒 Conversation locked"
-- [ ] Composer shows the locked message instead of an input
+- [ ] Discussion category is `Announcement`.
+- [ ] Only owner-authored threads exist in the category.
 
 ---
 
@@ -236,7 +244,10 @@ version:
 2. For a *new* tribute, generate the paste block with
    `./scripts/print-paste-blocks.rb` and copy the block for your new
    entry.
-3. Unlock the Discussion thread on GitHub → post/edit → re-lock.
+3. Sign in on `/tributes/` as the repo owner and paste the block into
+   the Giscus composer → *Comment*. (Discussion is not locked — see
+   [Moderation posture](#6-moderation-posture-announcement-category) —
+   so no unlock/relock dance is needed.)
 4. If you need to hard-remove a comment, delete it on GitHub and remove
    the entry from `_data/messages.yml`.
 5. For refinements to AI-generated translations, edit both places
@@ -259,8 +270,8 @@ Do not switch to private.
 ### Collaborators
 Add via **Settings → Collaborators**. New collaborators can:
 - Push to the repo (edits go live on next Actions build).
-- Post in locked discussions (locked threads still accept maintainer
-  comments).
+- Post in the tribute Discussion (as maintainers of the Announcement
+  category, they can create threads and reply freely).
 - Manage Discussions settings if given admin role.
 
 ### Giscus app
@@ -273,16 +284,16 @@ transfer).
 
 Seeding the tribute thread requires you to grant giscus.app OAuth
 access so it can post comments as you (separate from the App
-installation above). Once seeding is done and the discussion is locked,
-that grant is no longer needed. To revoke:
+installation above). Once seeding is done, that grant is only needed
+if you plan to post more comments as yourself later. To revoke:
 
 1. Visit [github.com/settings/apps/authorizations](https://github.com/settings/apps/authorizations).
 2. Find **Giscus** in the list.
 3. Click **Revoke**.
 
 Purely cosmetic — the site keeps working either way. Revoking just
-tidies your "authorized apps" list. If you ever unlock the discussion
-to post more tributes yourself, you'll be re-prompted to re-authorize
+tidies your "authorized apps" list. If you ever come back to post
+another tribute via the widget, you'll be re-prompted to re-authorize
 at that time.
 
 ---

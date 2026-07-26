@@ -9,7 +9,7 @@ tagline: "February 25, 1935 – March 1, 2019"
 description: "In loving memory of Jozefa Sobkowicz."
 
 # The public web address of the finished site.
-url: "https://www.jozefasobkowicz.com"
+url: "https://jozefasobkowicz.com"
 
 # The email that the "leave a tribute" link and footer point to.
 contact_email: "mattkuzminski@gmail.com"
@@ -18,14 +18,15 @@ maintainer: "Matthew Kuzminski"
 # --- Tributes page behaviour ------------------------------------------------
 # How the tributes on /tributes/ are shown:
 #   "static" = the curated list from _data/messages.yml (attribution preserved)
-#   "giscus" = a live GitHub-Discussions comment thread (lock it to disable)
+#   "giscus" = a live GitHub-Discussions comment thread
 #   "both"   = static list first, then a Giscus thread below it
 #
 # Set to "giscus": the tributes live in a GitHub Discussion on THIS repo, seeded
-# from the owner account, then the discussion is locked to stop new posts
-# (see docs/github-runbook.md steps 5-6). _data/messages.yml is the canonical
-# text archive regardless of display mode — under "giscus" it is not read at
-# render time, but it IS read by scripts/print-paste-blocks.rb when
+# from the owner account. The Discussion category is "Announcement" — only
+# maintainers can create new threads, which is the site's primary moderation
+# posture. See docs/github-runbook.md steps 5-6. _data/messages.yml is the
+# canonical text archive regardless of display mode — under "giscus" it is not
+# read at render time, but it IS read by scripts/print-paste-blocks.rb when
 # (re)generating paste-ready markdown for seeding.
 messages_display: "giscus"
 
@@ -39,9 +40,10 @@ giscus:
   category: "Tributes"
   category_id: "DIC_kwDOTeWbSs4DB96h"
   mapping: "pathname"
-  reactions_enabled: "1"
+  reactions_enabled: "0"       # hide the reactions header; memorial thread stays read-first
   theme: "preferred_color_scheme"
   lang: "en"
+  input_position: "bottom"     # composer below the comment list, so tributes read top-first
 
 # ---------------------------------------------------------------------------
 # Build settings — you normally don't need to change anything below this line.

@@ -113,14 +113,16 @@ The Tributes page (`/tributes/`) is backed by two coordinated pieces:
   Polish entries). See the file's own header comment for the marker legend
   and Translation Review Notes.
 - **The GitHub Discussion at `/tributes/`** — what visitors actually see, via
-  the [Giscus](https://giscus.app) widget. Seeded from `_data/messages.yml`
-  and then locked so no new comments can be posted (spam prevention +
-  moderated feel appropriate to a memorial).
+  the [Giscus](https://giscus.app) widget. Seeded from `_data/messages.yml`.
+  Moderation posture: the Discussion category is **Announcement**, so only
+  maintainers can create new threads (primary spam mitigation); the single
+  existing thread accepts replies from signed-in visitors, and unwanted
+  ones can be deleted directly on GitHub.
 
 Read [`docs/github-runbook.md § 5–6`](docs/github-runbook.md#5-seed-the-tribute-thread)
-for the initial seeding + locking procedure.
+for initial seeding + moderation notes.
 
-### Adding a new tribute (after the site is live and the Discussion is locked)
+### Adding a new tribute
 
 1. **Edit `_data/messages.yml`** — add a new entry. Only `name` and `body` are
    required; `relation`, `location`, `date`, and `translation` are optional.
@@ -134,13 +136,10 @@ for the initial seeding + locking procedure.
    The script sorts by date and emits one markdown block per entry (matches
    the attribution format used when the site was first seeded). Find your
    new entry in the output.
-3. **Unlock the Discussion on GitHub** — Discussions → the tribute thread →
-   ⋯ menu → *Unlock conversation*.
-4. **Sign in on `/tributes/` as the repo owner** and paste the block into the
+3. **Sign in on `/tributes/` as the repo owner** and paste the block into the
    Giscus composer → *Comment*.
-5. **Re-lock the Discussion** (⋯ → *Lock conversation*).
-6. Commit `_data/messages.yml` so the archive stays in sync with the posted
-   comments.
+4. Commit `_data/messages.yml` so the archive stays in sync with the posted
+   comment.
 
 ### Editing an existing tribute (e.g. refining an AI translation)
 

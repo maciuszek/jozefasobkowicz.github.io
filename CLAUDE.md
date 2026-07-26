@@ -62,10 +62,15 @@ Enforce this when adding anything new. Do NOT restate; link.
   [originals/README.txt](originals/README.txt). If serving high-res becomes
   a want, the path is object storage (R2/S3) via `photos_base_url` — not
   putting them back in git.
-- **Giscus phase 1: seed then lock.** The tribute Discussion is seeded from
-  the owner account and then **immediately locked** — the widget on
-  `/tributes/` renders comments read-only, no new posts. Don't propose
-  reopening for comments unless the user explicitly asks.
+- **Giscus phase 1: seed + Announcement category.** Tribute Discussion
+  seeded from the owner account. Protection is the **Announcement**
+  category (only maintainers can create new threads); per-thread
+  `Lock conversation` was NOT applied — the option wasn't discoverable
+  in GitHub's UI for this category configuration, and the accepted
+  posture is: low spam risk (memorial site + GitHub sign-in friction),
+  any bad-faith reply can be deleted individually. Don't propose adding
+  a formal thread lock or reopening the category to General unless the
+  user explicitly asks.
 - **Featured photos are curated manually**, not auto-selected. Four files
   in [assets/img/featured/](assets/img/featured/); home page lists them
   alphabetically.
@@ -84,6 +89,18 @@ Enforce this when adding anything new. Do NOT restate; link.
   `translation_ai_generated: true`; six undated entries have
   `date_defaulted: true`. See the header of `_data/messages.yml` for the
   Translation Review Notes.
+- **Giscus widget config choices (in `_config.yml` under `giscus:`):**
+  - `reactions_enabled: "0"` — reactions header + emoji picker hidden;
+    reduces interactive cruft above the tributes on a memorial page.
+  - `input_position: "bottom"` — composer sits below the comment list
+    so visitors read tributes top-first, action prompt after.
+  - `theme: "preferred_color_scheme"` — auto light/dark based on the
+    visitor's OS. Don't change without a specific reason.
+- **No "email a tribute" invite on `/tributes/`.** Removed 2026-07-26:
+  the Giscus composer accepts contributions from signed-in visitors, so
+  a redundant email invite is dropped. `contact_email` still shows in
+  the footer for general contact. If the discussion is ever formally
+  locked, revisit whether an email invite belongs back on the page.
 
 ## Workflow with the user
 
@@ -99,12 +116,24 @@ Enforce this when adding anything new. Do NOT restate; link.
 checklist with 👤/🤖 attribution and ✓ marks. Consult it for authoritative
 state.
 
-Snapshot as of last update:
-- Site is live at `https://v2.jozefasobkowicz.com/` (custom **subdomain**
-  via CNAME, on `maciuszek/jozefasobkowicz.github.io` project-site repo).
-- Tributes seeded to the GitHub Discussion and locked (phase 1 done).
-- Remaining: apex DNS switchover to point `jozefasobkowicz.com` at GitHub
-  Pages A records, enable HTTPS, cancel GoDaddy hosting (all in Section D
-  of the deviation file), plus end-of-migration cleanups: review AI
-  translations, remove direnv config, fill Recorded values in the
-  runbooks, decide fate of `HANDOFF-PROMPT.md`, and optional revocations.
+Snapshot (as of last audit; verify against DEVIATION file):
+- Repo: `maciuszek/jozefasobkowicz.github.io` — a project site (owner
+  already had `maciuszek.github.io` reserved), served via GitHub Actions
+  build of Jekyll.
+- Currently deployed and reachable at `https://v2.jozefasobkowicz.com/`
+  (transitional custom subdomain used for staging + tribute seeding).
+- Cutover pending: apex `jozefasobkowicz.com` + `www` still point to
+  WordPress on GoDaddy. When cut over, `CNAME` file (already tracked)
+  will make the Pages custom domain the apex, and `v2.` subdomain can
+  be removed or kept as an alias.
+- Tributes seeded to the GitHub Discussion. Announcement category =
+  maintainer-only thread creation; no formal per-thread lock (see
+  decisions above).
+- Remaining migration work:
+  - Section D of DEVIATION: apex DNS switchover, HTTPS enforcement,
+    cancel GoDaddy hosting.
+  - End-of-migration cleanup section: review AI translations, remove
+    direnv config, fill Recorded values, decide fate of
+    `HANDOFF-PROMPT.md`, optional Giscus OAuth revocation.
+  - Optional future tweaks: favicon variations (see the *Future tweaks*
+    section at the end of the DEVIATION file).

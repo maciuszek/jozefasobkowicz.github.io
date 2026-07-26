@@ -74,7 +74,7 @@ Canonical: [github-runbook.md § 3–4](docs/github-runbook.md#3-enable-discussi
       `giscus:` block; commit + push. Actions redeploys.
 - [✓] 👤 Reload `/tributes/` — the Giscus widget replaces the placeholder.
 
-### C. Seed and lock the tribute thread (original Task 6 cont'd)
+### C. Seed the tribute thread (original Task 6 cont'd)
 
 Canonical: [github-runbook.md § 5–6](docs/github-runbook.md#5-seed-the-tribute-thread).
 
@@ -99,9 +99,14 @@ Canonical: [github-runbook.md § 5–6](docs/github-runbook.md#5-seed-the-tribut
       propagate to future runs of the paste-blocks script; refinements
       to already-posted Giscus comments have to be applied directly on
       GitHub.
-- [ ] 👤 **Lock the Discussion** thread once all tributes are posted.
-      This is the intended steady state for phase 1 (see
-      [runbook § 6](docs/github-runbook.md#6-lock-the-discussion)).
+- [✓] 👤 Moderation posture = **Announcement category** (from Section B).
+      Only maintainers can create Discussion threads, which is the
+      primary spam mitigation. Per-thread `Lock conversation` was NOT
+      applied — the option wasn't discoverable in the current GitHub UI
+      for this category configuration, and the accepted posture is:
+      sign-in friction + low memorial-site profile mean spam risk is
+      minimal; any unwanted reply can be deleted individually. See
+      [runbook § 6](docs/github-runbook.md#6-moderation-posture-announcement-category).
 
 ### D. Custom domain + DNS (original Task 8)
 
@@ -155,12 +160,13 @@ Once everything above is checked off:
       [docs/dns-runbook.md](docs/dns-runbook.md) so those docs become
       as-built records, not just plans.
 - [ ] 👤 `rm -rf /tmp/photos-unzip.*` if still present (optional).
-- [ ] 👤 (Optional) Revoke the **Giscus OAuth authorization** you
+- [✓] 👤 (Optional) Revoke the **Giscus OAuth authorization** you
       granted during seeding — visit
       [github.com/settings/apps/authorizations](https://github.com/settings/apps/authorizations),
       find *Giscus*, click **Revoke**. Purely cosmetic on your
-      "authorized apps" list; the locked discussion keeps working
-      either way. See
+      "authorized apps" list; the discussion keeps working either way
+      (the OAuth grant is only needed to POST as you, not to render
+      existing comments). See
       [github-runbook § Optional: revoke your Giscus OAuth grant](docs/github-runbook.md#optional-revoke-your-giscus-oauth-grant).
 
 ---
