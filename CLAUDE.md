@@ -7,7 +7,7 @@ to canonical sources rather than restate.
 
 Memorial site for **Jozefa Sobkowicz** (1935–2019). Static Jekyll site on
 GitHub Pages, migrated from WordPress + NextGEN Gallery on GoDaddy shared
-hosting. Four pages: Home, About, Photos, Messages. Tone: respectful and
+hosting. Four pages: Home, About, Photos, Tributes. Tone: respectful and
 understated — this is a memorial, not a product.
 
 ## Environment (NixOS)
@@ -51,7 +51,7 @@ Enforce this when adding anything new. Do NOT restate; link.
   a want, the path is object storage (R2/S3) via `photos_base_url` — not
   putting them back in git.
 - **Giscus phase 1: seed then lock.** The tribute Discussion is seeded from
-  the owner account and then **immediately locked** — the widget on `/blog/`
+  the owner account and then **immediately locked** — the widget on `/tributes/`
   renders comments read-only, no new posts. Don't propose reopening for
   comments unless the user explicitly asks.
 - **Featured photos are curated manually**, not auto-selected. Four files

@@ -71,10 +71,10 @@ this doc becomes an as-built record, not just a plan.
 
 **Verification:**
 - [ ] Actions build passes
-- [ ] Temp URL loads all four pages: `/`, `/about/`, `/photos/`, `/blog/`
+- [ ] Temp URL loads all four pages: `/`, `/about/`, `/photos/`, `/tributes/`
 - [ ] Photos gallery grid shows all images (currently 215)
 - [ ] Home page featured slideshow shows 4 images
-- [ ] `/blog/` renders the Giscus placeholder message (Giscus not configured yet — that's Step 4)
+- [ ] `/tributes/` renders the Giscus placeholder message (Giscus not configured yet — that's Step 4)
 
 **Recorded values:**
 - Temp URL: ______________________________________________________
@@ -90,7 +90,7 @@ this doc becomes an as-built record, not just a plan.
      which is what we want. (Alternatively `General` if you'd rather rely on
      manual per-thread locking.)
 3. Optional: create a single pinned thread inside the category (e.g. "In
-   memory of Jozefa") that the site will map every `/blog/` visit to via
+   memory of Jozefa") that the site will map every `/tributes/` visit to via
    Giscus's pathname mapping. Or let Giscus lazily create it on first visit.
 
 **Recorded values:**
@@ -123,11 +123,11 @@ this doc becomes an as-built record, not just a plan.
      theme: "light"
      lang: "en"
    ```
-5. Commit + push. Wait for Actions to redeploy (~1–2 min). Reload `/blog/` —
+5. Commit + push. Wait for Actions to redeploy (~1–2 min). Reload `/tributes/` —
    the widget should render (empty until Step 5).
 
 **Verification:**
-- [ ] Giscus widget appears on `/blog/`, not the placeholder
+- [ ] Giscus widget appears on `/tributes/`, not the placeholder
 - [ ] Widget shows "0 comments" and a signed-in composer (when logged in)
 
 **Recorded values:**
@@ -138,7 +138,7 @@ this doc becomes an as-built record, not just a plan.
 
 ## 5. Seed the tribute thread
 
-While logged into GitHub as the owner account, open the deployed `/blog/`
+While logged into GitHub as the owner account, open the deployed `/tributes/`
 and, via the Giscus composer, post each entry from
 [_data/messages.yml](../_data/messages.yml) as a **separate comment**.
 
@@ -188,7 +188,7 @@ it's not displayed while `messages_display: giscus`, but it's the archive.
 ## 6. Lock the discussion
 
 **This is the intended steady state for the site (phase 1).** The Giscus widget
-on `/blog/` should render the seeded tributes but accept no new comments —
+on `/tributes/` should render the seeded tributes but accept no new comments —
 avoiding spam and keeping the memorial thread stable. Do not skip this step.
 
 Once every tribute is posted:
@@ -200,7 +200,7 @@ Once every tribute is posted:
   for every seeded thread.
 
 Comments stay readable; no one can post new ones. Future contributors are
-directed via the "email a tribute" banner on `/blog/` (see `contact_email`
+directed via the "email a tribute" banner on `/tributes/` (see `contact_email`
 in `_config.yml`).
 
 **Verification:**

@@ -55,7 +55,7 @@ Canonical: [github-runbook.md § 1–2](docs/github-runbook.md#1-create-the-publ
 - [✓] 👤 **Settings → Pages → Source: GitHub Actions.**
 - [✓] 👤 Watch the **Actions** tab; first build takes 1–2 min.
 - [✓] 👤 Walk the temp `*.github.io` URL: `/`, `/about/`, `/photos/`,
-      `/blog/` all render. `/blog/` will show the Giscus placeholder —
+      `/tributes/` all render. `/tributes/` will show the Giscus placeholder —
       expected.
 
 ### B. Enable Discussions + wire up Giscus (original Task 6)
@@ -72,7 +72,7 @@ Canonical: [github-runbook.md § 3–4](docs/github-runbook.md#3-enable-discussi
       `category_id`.
 - [✓] 🤖 Paste those four values into [_config.yml](_config.yml)'s
       `giscus:` block; commit + push. Actions redeploys.
-- [✓] 👤 Reload `/blog/` — the Giscus widget replaces the placeholder.
+- [✓] 👤 Reload `/tributes/` — the Giscus widget replaces the placeholder.
 
 ### C. Seed and lock the tribute thread (original Task 6 cont'd)
 
@@ -85,7 +85,7 @@ Canonical: [github-runbook.md § 5–6](docs/github-runbook.md#5-seed-the-tribut
 - [ ] 👤 Logged in as the repo owner, post each block from
       [messages-paste-blocks.md](messages-paste-blocks.md) as a separate
       comment via the Giscus composer at
-      https://v2.jozefasobkowicz.com/blog/ (or the final URL, once
+      https://v2.jozefasobkowicz.com/tributes/ (or the final URL, once
       cut over). Copy the content inside each fenced block, paste,
       click **Comment**, repeat for all 18.
 - [ ] 👤 Proofread Polish/Ukrainian entries against

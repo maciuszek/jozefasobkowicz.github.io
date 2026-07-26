@@ -1,7 +1,7 @@
 # Jozefa Sobkowicz — memorial site (Jekyll)
 
 A static rebuild of jozefasobkowicz.com, moving off WordPress/GoDaddy onto
-Jekyll + GitHub Pages. Four sections: **Home**, **About**, **Photos**, **Messages**.
+Jekyll + GitHub Pages. Four sections: **Home**, **About**, **Photos**, **Tributes**.
 
 ---
 
@@ -114,5 +114,5 @@ on building and using the repo:
 - **[docs/godaddy-migration.md](docs/godaddy-migration.md)** — one-time
   historical record of the WordPress → Jekyll migration.
 
-Comments on `/blog/` are backed by GitHub Discussions via Giscus — see the
+Comments on `/tributes/` are backed by GitHub Discussions via Giscus — see the
 GitHub runbook for setup.

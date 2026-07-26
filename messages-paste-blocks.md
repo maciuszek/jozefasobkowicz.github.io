@@ -1,7 +1,7 @@
 # Paste-ready tribute blocks for Giscus seeding
 
 Staging file used to copy-paste tributes into the Giscus composer on
-`/blog/`. **Tracked in git as a record of what was posted** —
+`/tributes/`. **Tracked in git as a record of what was posted** —
 Jekyll-excluded from the built site.
 
 Each of the 18 blocks below is inside a fenced code block for clean
@@ -12,7 +12,7 @@ copy-paste. Workflow:
 2. Copy **only the content inside the fence** (not the ``` fence markers
    themselves).
 3. Paste into the Giscus composer at
-   https://v2.jozefasobkowicz.com/blog/, click **Comment**.
+   https://v2.jozefasobkowicz.com/tributes/, click **Comment**.
 4. Return here, move to the next block.
 
 **Order:** chronological by tribute date, oldest first. Ties preserve

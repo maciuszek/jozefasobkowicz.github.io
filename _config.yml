@@ -15,8 +15,8 @@ url: "https://www.jozefasobkowicz.com"
 contact_email: "mattkuzminski@gmail.com"
 maintainer: "Matthew Kuzminski"
 
-# --- Messages page behaviour ------------------------------------------------
-# How the tributes on /blog/ are shown:
+# --- Tributes page behaviour ------------------------------------------------
+# How the tributes on /tributes/ are shown:
 #   "static" = the curated list from _data/messages.yml (attribution preserved)
 #   "giscus" = a live GitHub-Discussions comment thread (lock it to disable)
 #   "both"   = static list first, then a Giscus thread below it
