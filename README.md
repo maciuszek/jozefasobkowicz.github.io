@@ -35,7 +35,7 @@ See [Adding photos](#adding-photos) below.
 |--------------------------|---------------------------------------------------|
 | Her name, dates, email   | `_config.yml`                                     |
 | The About text           | `about.md`                                        |
-| The tribute messages     | `_data/messages.yml`                              |
+| The tribute messages     | `_data/messages.yml` (archive) + posted comments on the GitHub Discussion (what visitors see); see [Managing tributes](#managing-tributes) |
 | Home-page featured photos | drop 4 images in `assets/img/featured/`          |
 | The photo gallery         | drop originals in `originals/`, run `./scripts/rebuild-photos.sh` (see [Adding photos](#adding-photos)) |
 | Colours / fonts / layout | `assets/css/style.css`                            |
@@ -99,6 +99,64 @@ writes, it doesn't clean up stale derivatives).
 The four **home-page featured** images are separate and manually curated: put
 whatever four you want in `assets/img/featured/`. They're not run through the
 script; the home page just picks up whatever is there.
+
+---
+
+## Managing tributes
+
+The Tributes page (`/tributes/`) is backed by two coordinated pieces:
+
+- **[`_data/messages.yml`](_data/messages.yml)** — canonical text archive of
+  every tribute (name, date, body, optional relation/location/translation).
+  Transcribed from the old WordPress site plus enrichment (defaulted dates
+  where the original had none, AI-generated English translations for the
+  Polish entries). See the file's own header comment for the marker legend
+  and Translation Review Notes.
+- **The GitHub Discussion at `/tributes/`** — what visitors actually see, via
+  the [Giscus](https://giscus.app) widget. Seeded from `_data/messages.yml`
+  and then locked so no new comments can be posted (spam prevention +
+  moderated feel appropriate to a memorial).
+
+Read [`docs/github-runbook.md § 5–6`](docs/github-runbook.md#5-seed-the-tribute-thread)
+for the initial seeding + locking procedure.
+
+### Adding a new tribute (after the site is live and the Discussion is locked)
+
+1. **Edit `_data/messages.yml`** — add a new entry. Only `name` and `body` are
+   required; `relation`, `location`, `date`, and `translation` are optional.
+   Look at any existing entry as a template.
+2. **Generate the paste-ready block** for the new entry:
+   ```bash
+   ./scripts/print-paste-blocks.rb           # prints all blocks to stdout
+   # or: ./scripts/print-paste-blocks.rb > /tmp/blocks.md
+   ```
+   The script sorts by date and emits one markdown block per entry (matches
+   the attribution format used when the site was first seeded). Find your
+   new entry in the output.
+3. **Unlock the Discussion on GitHub** — Discussions → the tribute thread →
+   ⋯ menu → *Unlock conversation*.
+4. **Sign in on `/tributes/` as the repo owner** and paste the block into the
+   Giscus composer → *Comment*.
+5. **Re-lock the Discussion** (⋯ → *Lock conversation*).
+6. Commit `_data/messages.yml` so the archive stays in sync with the posted
+   comments.
+
+### Editing an existing tribute (e.g. refining an AI translation)
+
+Neither surface auto-updates the other, so edit in both places:
+
+- `_data/messages.yml` — the archive, and the source that
+  `./scripts/print-paste-blocks.rb` reads for any future re-seed.
+- The posted comment on GitHub — what visitors see. Sign in as the repo
+  owner, open the comment on the Discussion, edit inline.
+
+### The regen script
+
+[`scripts/print-paste-blocks.rb`](scripts/print-paste-blocks.rb) is a small
+Ruby program (stdlib only — no new dependency, uses the Ruby that the Jekyll
+dev shell already provides). It reads `_data/messages.yml`, sorts entries by
+date (ties preserve YAML declaration order), and prints paste-ready blocks
+to stdout. Pure read + pure output — idempotent, safe to re-run.
 
 ---
 

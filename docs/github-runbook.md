@@ -142,6 +142,20 @@ While logged into GitHub as the owner account, open the deployed `/tributes/`
 and, via the Giscus composer, post each entry from
 [_data/messages.yml](../_data/messages.yml) as a **separate comment**.
 
+For a copy-paste-ready rendering (attribution header + body + translation
+blockquote already formatted, sorted chronologically), from the repo root
+inside `nix develop`:
+
+```bash
+./scripts/print-paste-blocks.rb > /tmp/blocks.md
+```
+
+Open the file, copy the content INSIDE each fenced code block, paste into
+the composer, click *Comment*, repeat. This is the standard seeding path.
+The script is a pure read of `_data/messages.yml` — safe to re-run at any
+time (see [Managing tributes](../README.md#managing-tributes) in the
+README).
+
 The first time you click **Sign in with GitHub** in the composer,
 GitHub prompts you to authorize Giscus with three permissions:
 
@@ -212,11 +226,21 @@ in `_config.yml`).
 ## Ongoing maintenance
 
 ### Add or edit a tribute
-1. Update [_data/messages.yml](../_data/messages.yml) in a commit (so the text
-   backup stays current).
-2. Unlock the relevant thread on GitHub → post/edit → re-lock.
-3. If you need to hard-remove a comment, delete it on GitHub and remove the
-   entry from `_data/messages.yml`.
+
+Full walkthrough (with copy-paste commands) lives in
+[README § Managing tributes](../README.md#managing-tributes). Short
+version:
+
+1. Update [_data/messages.yml](../_data/messages.yml) in a commit — the
+   canonical text archive.
+2. For a *new* tribute, generate the paste block with
+   `./scripts/print-paste-blocks.rb` and copy the block for your new
+   entry.
+3. Unlock the Discussion thread on GitHub → post/edit → re-lock.
+4. If you need to hard-remove a comment, delete it on GitHub and remove
+   the entry from `_data/messages.yml`.
+5. For refinements to AI-generated translations, edit both places
+   (archive AND posted comment) — neither auto-updates the other.
 
 ### GitHub Actions build failing
 Check the **Actions** tab. Common causes:

@@ -1,12 +1,64 @@
 # ---------------------------------------------------------------------------
-# Tributes shown on the Tributes page (/tributes/).
+# Tributes archive — canonical source of the memorial tributes for
+# jozefasobkowicz.com.
 #
-# These were transcribed from the original WordPress site. PLEASE PROOFREAD the
-# Polish and Ukrainian entries against the original once, as accents and Cyrillic
-# can shift during any migration.
+# UNDER messages_display: "giscus" (current), this file is NOT rendered on
+# the site — the GitHub Discussion at /tributes/ is. Purpose here:
+#   1. Text backup of every tribute.
+#   2. Source for scripts/print-paste-blocks.rb, which regenerates paste-
+#      ready markdown blocks for seeding the Giscus thread.
+#   3. Static-mode fallback: if messages_display is ever flipped to
+#      "static" or "both", tributes.html iterates this file and renders
+#      entries directly.
 #
-# To add a new one, copy a block below. Only "name" and "body" are required.
-# The "|" after body/translation means "keep line breaks exactly as written".
+# Ordering: entries appear in the original curated order transcribed from
+# WordPress — NOT chronological by date. For chronological display (e.g.
+# when seeding a fresh Giscus thread) scripts/print-paste-blocks.rb sorts
+# by date at print time.
+#
+# Marker legend (optional per-entry fields):
+#   date_defaulted: true           the date is a placeholder (March 1, 2019,
+#                                  the date of Jozefa's passing). The
+#                                  original tribute had no date recorded.
+#   translation_ai_generated: true the English translation was produced by
+#                                  AI; native-speaker proofread needed.
+#                                  Absent marker = English original OR
+#                                  sender-provided translation (trustworthy).
+#   translation_partial: true      the translation covers only part of the
+#                                  body (used for entries that were mostly
+#                                  English but had a small Polish portion).
+#
+# WARNING — Translation caveat: 9 entries have AI-generated English
+# translations (marked with translation_ai_generated: true). These are
+# permanent public tributes if used to reseed the Giscus thread — please
+# have a native Polish speaker review before pasting. The Ukrainian
+# translations from Степан Стецій and Павло Луцюк were provided by the
+# original senders and are authoritative.
+#
+# Translation review notes — judgment calls in the AI translations, worth
+# a second opinion during proofreading:
+#   * Diminutives: Kept Polish diminutives (Bożenko, Mateuszek, Cioci) in
+#     the English translations where they add warmth. Anglicize if preferred
+#     (Bożena, Matthew, Aunt).
+#   * Jarek Zając: Translated "cóż, życie!" as "well, such is life!" —
+#     colloquial. Gentler alternatives: "well, that's life"; "such is life".
+#   * Stanisław Zając: "Zająców i Trybusów" rendered as "the Zając and
+#     Trybus families" (Polish uses declined plural forms; English needs the
+#     surnames + "families" for readability).
+#   * Katarzyna Motzko: "Ciociu Bożenko, Wujku Rysku" translated Aunt/Uncle
+#     but kept the names in Polish diminutive form. Consider fully
+#     Anglicizing to "Aunt Bożena, Uncle Ryszard" if preferred.
+#   * John Majowski: The Polish prayer line ("Wieczny odpoczynek…") was
+#     rendered as the standard English Catholic form: "Eternal rest grant
+#     unto her, O Lord, and let perpetual light shine upon her, forever and
+#     ever, Amen."
+#
+# To add a new tribute: copy a block below. Only "name" and "body" are
+# required. The "|" after body/translation means "keep line breaks exactly
+# as written". Also proofread Polish/Ukrainian entries for Unicode drift.
+#
+# To (re)generate paste-ready markdown blocks for seeding the Giscus thread:
+#   ./scripts/print-paste-blocks.rb
 # ---------------------------------------------------------------------------
 
 - name: Dianne Parwicki
@@ -103,6 +155,10 @@
     I am the soft stars that shine at night.
     Do not stand at my grave and cry,
     I am not there; I did not die.
+  translation: |
+    Dear Bożenko, I called but I said nothing, because what can one say when there is mourning, pain, and sadness everywhere — if only there were some words of comfort, but even words are lacking. I know that your dear Mama loved poetry, and I found such a poem and wanted to share it with you:
+  translation_ai_generated: true
+  translation_partial: true
 
 - name: Степан Стецій
   relation: Family
@@ -129,6 +185,10 @@
     Our prayers are with you.
     Wieczny odpoczynek racz jej dać Panie, a światłość wiekuista niechaj jej świeci na wieki wieków, Amen.
     God bless.
+  translation: |
+    Eternal rest grant unto her, O Lord, and let perpetual light shine upon her, forever and ever, Amen.
+  translation_ai_generated: true
+  translation_partial: true
 
 - name: Anna
   date: "March 3, 2019"
@@ -140,40 +200,85 @@
     Wierzę mocno, że Ona patrzy na Was, będzie Wam orędowniczką w niebie. Nie utraciliście jej całkowicie.
     Wiara nasza nie pozwala nam się załamywać, pozostawać w rozpaczy. Mateuszek cierpi, ale to świadczy dobrze o jego wielkim przywiązaniu do Babci.
     Bożenko napisz kiedy pogrzeb, nie mamy możliwości żeby być na pogrzebie ale tutaj będziemy uczestniczyć we mszy św. Będziemy łączyć się z Wami w modlitwie i w smutku.
+  translation: |
+    Dear Bożenko,
+    you surprised me greatly with this news, though such a sad departure is always surprising.
+    Mama had a blessed death — conscious of her situation to the end, she departed surely prepared for the meeting with God.
+    We deeply sympathize with you. My parents already know and are praying. I too will remember dear Pani Józefa.
+    I firmly believe that She is watching over you, that She will be your intercessor in heaven. You have not lost her completely.
+    Our faith does not allow us to break down or remain in despair. Mateuszek is suffering, but that speaks well of his great attachment to his Grandmother.
+    Bożenko, write when the funeral is — we have no way to be at the funeral, but here we will participate in the Holy Mass. We will join you in prayer and in sorrow.
+  translation_ai_generated: true
 
 - name: Witold Zając
   location: Poland
+  date: "March 1, 2019"
+  date_defaulted: true
   body: |
     Witaj Bożeno! Przyjmij proszę wyrazy współczucia w związku ze śmiercią Mamy. Jest mi przykro i smutno, tym bardziej, że pomimo upływu lat, mam takie ciepłe wspomnienia o Niej. Chwile spędzone z Wami w Złotogłowicach zapadły mi głęboko w pamięci. Łączę się w myślach i modlitwie.
     Serdecznie pozdrawiam
     Witold Zając z Elą
+  translation: |
+    Hello Bożena! Please accept our condolences on the death of your Mother. I am sad and sorry, all the more so because despite the passing of the years, I have such warm memories of Her. The moments spent with you in Złotogłowice are deeply etched in my memory. I join you in thought and in prayer.
+    Warmest regards,
+    Witold Zając with Ela
+  translation_ai_generated: true
 
 - name: Jarek Zając
+  date: "March 1, 2019"
+  date_defaulted: true
   body: |
     Drodzy nasi, Bożenko!
     Z wielkim smutkiem przyjęliśmy wiadomość o śmierci Twojej Mamy. Składamy Tobie i Wam wszystkim serdeczne wyrazy współczucia. Od nas, rodziców i Witka.
     Zawsze bardzo miło wspominałem Twoją Mamę, a moją Ciocię, z tych kilku dni pobytu u Was w Kanadzie. Jeszcze w zeszły weekend, kiedy byliśmy z Witkiem na nartach, rozmawialiśmy o Kanadzie i wspominałem Ciocię Józię i Leona… cóż, życie!
     Trzymajcie się! Pozdrawiam i ściskam Was, Jarek
+  translation: |
+    Dear ones, Bożenko!
+    With great sadness we received the news of the death of your Mother. We offer you and all of you our heartfelt condolences — from us, from the parents, and from Witek.
+    I always remembered your Mother — my Aunt — very fondly, from those few days spent with you in Canada. Just last weekend, when Witek and I were out skiing, we talked about Canada and I recalled Aunt Józia and Leon… well, such is life!
+    Take care! Warm regards and a hug, Jarek
+  translation_ai_generated: true
 
 - name: Stanisław Zając
+  date: "March 1, 2019"
+  date_defaulted: true
   body: |
     Kochani!
     Z ogromnym smutkiem i żalem przyjęliśmy wiadomość o odejściu do Pana Waszej Kochanej Mamy i Babci.
     Prosimy przyjąć od całej naszej najbliższej rodziny Zająców i Trybusów wyrazy szczerego i z głębi serca płynącego współczucia i żalu.
     To bardzo smutna dla nas wiadomość. Pamięć o zmarłej pozostanie na zawsze w naszych sercach i umysłach.
     W imieniu całej rodziny —
+  translation: |
+    Dear ones!
+    With great sadness and sorrow we received the news of your Beloved Mother and Grandmother's departure to the Lord.
+    Please accept, from our entire closest family — the Zając and Trybus families — our sincere condolences and sorrow, coming from the depths of our hearts.
+    This is very sad news for us. The memory of the departed will remain forever in our hearts and minds.
+    On behalf of the whole family —
+  translation_ai_generated: true
 
 - name: Jasia i Staszek
+  date: "March 1, 2019"
+  date_defaulted: true
   body: |
     Bożenko, bardzo prosimy Cię o podanie daty pogrzebu, chcielibyśmy chociaż duchowo w nim uczestniczyć.
+  translation: |
+    Bożenko, we kindly ask you to let us know the date of the funeral — we would like to at least participate spiritually.
+  translation_ai_generated: true
 
 - name: Teresa Neckar
   location: Wrocław, Poland
+  date: "March 1, 2019"
+  date_defaulted: true
   body: |
     Bardzo współczujemy i łączymy się w Waszym bólu. Proszę o informację — kiedy będzie pochowana? Serdecznie pozdrawiamy — Teresa i Darek i mama Jasia.
+  translation: |
+    We deeply sympathize and join you in your grief. Please let us know — when will she be buried? Warm regards — Teresa and Darek and mama Jasia.
+  translation_ai_generated: true
 
 - name: Katarzyna Motzko
   location: Wrocław, Poland
+  date: "March 1, 2019"
+  date_defaulted: true
   body: |
     Kochani,
     Ciociu Bożenko, Wujku Rysku i Mateuszu,
@@ -182,3 +287,12 @@
     Zostanie odprawiona msza święta w intencji Cioci Józi, jeszcze nie wiem, o której godzinie i w jaki dzień. Napiszę w kolejnym mailu.
     Łączymy się z Wami w bólu.
     Kasia z Rodziną, Andrzej z Rodziną oraz nasi Rodzice
+  translation: |
+    Dear ones,
+    Aunt Bożenko, Uncle Rysiu, and Mateusz,
+    It is hard to say goodbye forever to someone who could still have been with us.
+    With great pain we received the news of Auntie's death. We offer our condolences.
+    A Holy Mass will be offered in Aunt Józia's intention; I don't yet know at what time or on what day. I'll write in a follow-up email.
+    We join you in your grief.
+    Kasia with Family, Andrzej with Family, and our Parents
+  translation_ai_generated: true

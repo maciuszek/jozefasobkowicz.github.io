@@ -78,18 +78,26 @@ Canonical: [github-runbook.md § 3–4](docs/github-runbook.md#3-enable-discussi
 
 Canonical: [github-runbook.md § 5–6](docs/github-runbook.md#5-seed-the-tribute-thread).
 
-- [✓] 🤖 Pre-formatted the 18 tributes into
-      [messages-paste-blocks.md](messages-paste-blocks.md) per the
-      runbook's attribution template. Tracked in git as a record of
-      what was pasted; Jekyll-excluded from the built site.
-- [ ] 👤 Logged in as the repo owner, post each block from
-      [messages-paste-blocks.md](messages-paste-blocks.md) as a separate
-      comment via the Giscus composer at
+- [✓] 🤖 Enriched [_data/messages.yml](_data/messages.yml) with all the
+      "matured" content (AI translations, defaulted dates, Translation
+      Review Notes in the header). YAML is the canonical source of
+      truth; entries stay in original WordPress order.
+      [scripts/print-paste-blocks.rb](scripts/print-paste-blocks.rb)
+      renders paste-ready markdown blocks from it, sorted
+      chronologically at print time.
+- [ ] 👤 Generate the paste blocks and seed them. From the repo root
+      (inside `nix develop`):
+      `./scripts/print-paste-blocks.rb > /tmp/blocks.md`. Open the file,
+      then — logged in as the repo owner — copy the content INSIDE each
+      fenced block and paste into the Giscus composer at
       https://v2.jozefasobkowicz.com/tributes/ (or the final URL, once
-      cut over). Copy the content inside each fenced block, paste,
-      click **Comment**, repeat for all 18.
-- [ ] 👤 Proofread Polish/Ukrainian entries against
-      [_data/messages.yml](_data/messages.yml) as you paste.
+      cut over), one comment per block, 18 total.
+- [ ] 👤 Proofread AI translations in
+      [_data/messages.yml](_data/messages.yml) — see the Translation
+      Review Notes in the file's header comment. Edits made there
+      propagate to future runs of the paste-blocks script; refinements
+      to already-posted Giscus comments have to be applied directly on
+      GitHub.
 - [ ] 👤 **Lock the Discussion** thread once all tributes are posted.
       This is the intended steady state for phase 1 (see
       [runbook § 6](docs/github-runbook.md#6-lock-the-discussion)).
@@ -124,18 +132,14 @@ Once everything above is checked off:
       or delete. Currently tracked, kept as history.
 - [ ] 👤 Delete this file (`HANDOFF-PROMPT-DEVIATION.md`). Its purpose
       ends here.
-- [ ] 👤 (Optional) Delete
-      [messages-paste-blocks.md](messages-paste-blocks.md) — the
-      paste-staging file. Kept in git as a record during the migration;
-      the locked GitHub Discussion is now the canonical archive of what
-      was posted, so the file can go if you'd like to tidy the repo
-      root. **Before deleting**, walk through the
-      *Translation review notes* section at the top of the file —
-      any refinements you still want on the AI-generated Polish
-      translations need to be applied by **editing the posted Giscus
-      comments on GitHub** (the paste file was the source; the
-      Discussion is now the canonical text). Once you're satisfied
-      the comments match the intent, deleting the paste file is safe.
+- [ ] 👤 Review the AI-generated translations in
+      [_data/messages.yml](_data/messages.yml) — walk through the
+      *Translation review notes* section in the file's header comment
+      and refine as desired. Refinements should be applied in two
+      places: (a) edit the AI translations in `_data/messages.yml` so
+      the archive stays accurate and future re-seeds carry the
+      corrections, and (b) edit the corresponding posted Giscus
+      comments on GitHub so visitors see the refined text.
 - [ ] 🤖 Remove direnv support (owner doesn't use it): delete
       [`.envrc`](.envrc), drop the `.direnv/` line from
       [`.gitignore`](.gitignore), and remove the `direnv allow` /

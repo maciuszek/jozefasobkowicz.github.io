@@ -23,9 +23,10 @@ maintainer: "Matthew Kuzminski"
 #
 # Set to "giscus": the tributes live in a GitHub Discussion on THIS repo, seeded
 # from the owner account, then the discussion is locked to stop new posts
-# (see docs/github-runbook.md steps 5-6). The curated list in _data/messages.yml
-# is kept as the paste-source and a text backup; it is not displayed while this
-# is "giscus".
+# (see docs/github-runbook.md steps 5-6). _data/messages.yml is the canonical
+# text archive regardless of display mode — under "giscus" it is not read at
+# render time, but it IS read by scripts/print-paste-blocks.rb when
+# (re)generating paste-ready markdown for seeding.
 messages_display: "giscus"
 
 # Giscus settings. Only used when messages_display is "giscus" or "both".
@@ -59,7 +60,6 @@ exclude:
   - CLAUDE.md
   - HANDOFF-PROMPT.md
   - HANDOFF-PROMPT-DEVIATION.md
-  - messages-paste-blocks.md
   - Gemfile
   - Gemfile.lock
   - vendor
