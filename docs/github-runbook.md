@@ -147,7 +147,7 @@ blockquote already formatted, sorted chronologically), from the repo root
 inside `nix develop`:
 
 ```bash
-./scripts/print-paste-blocks.rb > /tmp/blocks.md
+./scripts/print-paste-blocks.rb > staged_messages.md   # git-ignored
 ```
 
 Open the file, copy the content INSIDE each fenced code block, paste into

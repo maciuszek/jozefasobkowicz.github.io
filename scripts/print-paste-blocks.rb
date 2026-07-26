@@ -12,8 +12,8 @@
 # runtime for a ~90-line script.
 #
 # USAGE:
-#   ./scripts/print-paste-blocks.rb                    # print to stdout
-#   ./scripts/print-paste-blocks.rb > /tmp/blocks.md   # regen paste file
+#   ./scripts/print-paste-blocks.rb                          # print to stdout
+#   ./scripts/print-paste-blocks.rb > staged_messages.md     # git-ignored
 #   ./scripts/print-paste-blocks.rb | xclip -selection clipboard
 #
 # Idempotent — pure read of YAML, pure stdout output. Safe to re-run.

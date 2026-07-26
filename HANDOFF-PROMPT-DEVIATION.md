@@ -85,9 +85,10 @@ Canonical: [github-runbook.md § 5–6](docs/github-runbook.md#5-seed-the-tribut
       [scripts/print-paste-blocks.rb](scripts/print-paste-blocks.rb)
       renders paste-ready markdown blocks from it, sorted
       chronologically at print time.
-- [ ] 👤 Generate the paste blocks and seed them. From the repo root
+- [✓] 👤 Generate the paste blocks and seed them. From the repo root
       (inside `nix develop`):
-      `./scripts/print-paste-blocks.rb > /tmp/blocks.md`. Open the file,
+      `./scripts/print-paste-blocks.rb > staged_messages.md` (the file
+      is git-ignored). Open it,
       then — logged in as the repo owner — copy the content INSIDE each
       fenced block and paste into the Giscus composer at
       https://v2.jozefasobkowicz.com/tributes/ (or the final URL, once

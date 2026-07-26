@@ -127,8 +127,9 @@ for the initial seeding + locking procedure.
    Look at any existing entry as a template.
 2. **Generate the paste-ready block** for the new entry:
    ```bash
-   ./scripts/print-paste-blocks.rb           # prints all blocks to stdout
-   # or: ./scripts/print-paste-blocks.rb > /tmp/blocks.md
+   ./scripts/print-paste-blocks.rb                       # prints to stdout
+   # or, redirect to a local staging file (git-ignored):
+   ./scripts/print-paste-blocks.rb > staged_messages.md
    ```
    The script sorts by date and emits one markdown block per entry (matches
    the attribution format used when the site was first seeded). Find your

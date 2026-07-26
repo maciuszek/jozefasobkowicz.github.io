@@ -23,3 +23,8 @@ originals/
 # Raw NextGEN gallery dump from GoDaddy — 710 MB, the migration source.
 # Keep locally as a backup of record (see docs/godaddy-migration.md).
 photos.zip
+
+# Local staging file produced by scripts/print-paste-blocks.rb for
+# copy-pasting tributes into the Giscus composer. Regenerable on demand
+# from _data/messages.yml; never meant to be committed.
+staged_messages.md
