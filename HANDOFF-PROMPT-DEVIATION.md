@@ -161,3 +161,32 @@ Once everything above is checked off:
       "authorized apps" list; the locked discussion keeps working
       either way. See
       [github-runbook § Optional: revoke your Giscus OAuth grant](docs/github-runbook.md#optional-revoke-your-giscus-oauth-grant).
+
+---
+
+## Future tweaks (post-migration, low priority)
+
+Ideas parked for later. None block the migration; revisit when the mood
+strikes.
+
+### Favicon ([assets/favicon.svg](assets/favicon.svg))
+
+Current: dark ink (`#2B2622`) rounded square, warm gold (`#C9AE73`) "JS"
+in Georgia serif. Possible refinements:
+
+- **Swap colors** — try paper (`#FBF8F2`) background with ink or gold
+  letters for a lighter feel.
+- **Different serif** — Baskerville, Playfair Display, EB Garamond,
+  Cormorant. Just change `font-family` in the SVG.
+- **Letter spacing** — add `letter-spacing="-0.02em"` (tighter) or
+  positive value (airier) on the `<text>` element.
+- **No square background** — remove the `<rect>` for free-floating "JS"
+  letters on a transparent background.
+- **Full-color match to Fraunces** — pre-render "JS" as SVG `<path>`
+  elements using the site's actual Fraunces face. Requires external
+  tooling (Inkscape / Fontforge / an online SVG text-to-path converter);
+  the payoff is that the favicon glyph matches the headline face
+  exactly.
+
+Browsers cache favicons aggressively — hard-refresh (Ctrl+Shift+R) or a
+private window is usually needed to see edits.
