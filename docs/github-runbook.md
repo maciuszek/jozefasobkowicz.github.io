@@ -141,6 +141,22 @@ this doc becomes an as-built record, not just a plan.
 While logged into GitHub as the owner account, open the deployed `/blog/`
 and, via the Giscus composer, post each entry from
 [_data/messages.yml](../_data/messages.yml) as a **separate comment**.
+
+The first time you click **Sign in with GitHub** in the composer,
+GitHub prompts you to authorize Giscus with three permissions:
+
+- **Verify your GitHub identity**
+- **Know what resources you can access**
+- **Act on your behalf** — needed so comments are posted as *you*
+  (with your avatar and name) rather than as a generic Giscus bot.
+  This is the only way to preserve per-user attribution.
+
+Giscus's actions are bounded by the App installation from Step 4:
+Discussions read/write on this repo only — no code, no settings,
+nothing outside this repo. The grant is visible at
+[github.com/settings/apps/authorizations](https://github.com/settings/apps/authorizations)
+and revocable any time (see
+[Optional: revoke your Giscus OAuth grant](#optional-revoke-your-giscus-oauth-grant)).
 Preserve attribution — Giscus attributes every comment to your account, so
 start each one with a bold header:
 
@@ -228,6 +244,22 @@ The Giscus app installation is under the repo owner's account. If you
 transfer the repo to another owner, re-install the app under the new owner
 and update `repo_id` / `category_id` in `_config.yml` (they change with the
 transfer).
+
+### Optional: revoke your Giscus OAuth grant
+
+Seeding the tribute thread requires you to grant giscus.app OAuth
+access so it can post comments as you (separate from the App
+installation above). Once seeding is done and the discussion is locked,
+that grant is no longer needed. To revoke:
+
+1. Visit [github.com/settings/apps/authorizations](https://github.com/settings/apps/authorizations).
+2. Find **Giscus** in the list.
+3. Click **Revoke**.
+
+Purely cosmetic — the site keeps working either way. Revoking just
+tidies your "authorized apps" list. If you ever unlock the discussion
+to post more tributes yourself, you'll be re-prompted to re-authorize
+at that time.
 
 ---
 

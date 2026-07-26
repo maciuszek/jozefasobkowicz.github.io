@@ -78,14 +78,18 @@ Canonical: [github-runbook.md § 3–4](docs/github-runbook.md#3-enable-discussi
 
 Canonical: [github-runbook.md § 5–6](docs/github-runbook.md#5-seed-the-tribute-thread).
 
-- [ ] 👤 Logged in as the repo owner, post each entry from
-      [_data/messages.yml](_data/messages.yml) as a separate comment
-      via the Giscus composer. Use the bold-header attribution format
-      (see runbook).
-- [ ] 👤 (Optional pre-work I can do) — I can pre-format the tributes
-      into paste-ready blocks so seeding is copy-paste, not
-      re-type-and-format. Say the word.
-- [ ] 👤 Proofread Polish/Ukrainian entries against `_data/messages.yml`.
+- [✓] 🤖 Pre-formatted the 18 tributes into
+      [messages-paste-blocks.md](messages-paste-blocks.md) per the
+      runbook's attribution template. Tracked in git as a record of
+      what was pasted; Jekyll-excluded from the built site.
+- [ ] 👤 Logged in as the repo owner, post each block from
+      [messages-paste-blocks.md](messages-paste-blocks.md) as a separate
+      comment via the Giscus composer at
+      https://v2.jozefasobkowicz.com/blog/ (or the final URL, once
+      cut over). Copy the content inside each fenced block, paste,
+      click **Comment**, repeat for all 18.
+- [ ] 👤 Proofread Polish/Ukrainian entries against
+      [_data/messages.yml](_data/messages.yml) as you paste.
 - [ ] 👤 **Lock the Discussion** thread once all tributes are posted.
       This is the intended steady state for phase 1 (see
       [runbook § 6](docs/github-runbook.md#6-lock-the-discussion)).
@@ -120,6 +124,18 @@ Once everything above is checked off:
       or delete. Currently tracked, kept as history.
 - [ ] 👤 Delete this file (`HANDOFF-PROMPT-DEVIATION.md`). Its purpose
       ends here.
+- [ ] 👤 (Optional) Delete
+      [messages-paste-blocks.md](messages-paste-blocks.md) — the
+      paste-staging file. Kept in git as a record during the migration;
+      the locked GitHub Discussion is now the canonical archive of what
+      was posted, so the file can go if you'd like to tidy the repo
+      root. **Before deleting**, walk through the
+      *Translation review notes* section at the top of the file —
+      any refinements you still want on the AI-generated Polish
+      translations need to be applied by **editing the posted Giscus
+      comments on GitHub** (the paste file was the source; the
+      Discussion is now the canonical text). Once you're satisfied
+      the comments match the intent, deleting the paste file is safe.
 - [ ] 🤖 Remove direnv support (owner doesn't use it): delete
       [`.envrc`](.envrc), drop the `.direnv/` line from
       [`.gitignore`](.gitignore), and remove the `direnv allow` /
@@ -134,3 +150,10 @@ Once everything above is checked off:
       [docs/dns-runbook.md](docs/dns-runbook.md) so those docs become
       as-built records, not just plans.
 - [ ] 👤 `rm -rf /tmp/photos-unzip.*` if still present (optional).
+- [ ] 👤 (Optional) Revoke the **Giscus OAuth authorization** you
+      granted during seeding — visit
+      [github.com/settings/apps/authorizations](https://github.com/settings/apps/authorizations),
+      find *Giscus*, click **Revoke**. Purely cosmetic on your
+      "authorized apps" list; the locked discussion keeps working
+      either way. See
+      [github-runbook § Optional: revoke your Giscus OAuth grant](docs/github-runbook.md#optional-revoke-your-giscus-oauth-grant).

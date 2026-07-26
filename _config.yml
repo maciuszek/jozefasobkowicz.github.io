@@ -59,6 +59,7 @@ exclude:
   - CLAUDE.md
   - HANDOFF-PROMPT.md
   - HANDOFF-PROMPT-DEVIATION.md
+  - messages-paste-blocks.md
   - Gemfile
   - Gemfile.lock
   - vendor
