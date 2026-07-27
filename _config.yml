@@ -52,6 +52,15 @@ markdown: kramdown
 permalink: pretty
 timezone: America/Toronto
 
+# Default Open Graph image (social preview card) — used by jekyll-seo-tag
+# on any page whose front-matter doesn't specify an `image:` of its own.
+# Chosen from assets/img/featured/ — safe portrait-friendly landscape.
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /assets/img/featured/DSC_0655.jpg
+
 # The photo gallery reads image files directly out of these folders, so
 # they must NOT be excluded from the build.
 include:

@@ -3,7 +3,7 @@ layout: page
 title: About
 permalink: /about/
 show_title: true
-description: The life of Jozefa Sobkowicz, remembered by her family.
+description: The life of Jozefa Sobkowicz (1935–2019) — remembered by her family, from Poland and Ukraine to Canada.
 ---
 
 It is with profound sadness and loving memories that our family announces the

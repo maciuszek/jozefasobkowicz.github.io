@@ -1,0 +1,28 @@
+---
+layout: null
+permalink: /sitemap-images.xml
+sitemap: false
+---
+<?xml version="1.0" encoding="UTF-8"?>
+{% comment %}
+  Image sitemap for Google image search.
+
+  Dynamic: enumerates whatever files are currently in
+  assets/img/photos/full/ on every Jekyll build. No list to maintain —
+  add a photo per README § Adding photos, next build includes it. See
+  docs/seo-runbook.md for background and cutover context.
+{% endcomment %}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemaps/image/1.1">
+  <url>
+    <loc>{{ '/photos/' | absolute_url }}</loc>
+    {%- assign photos = site.static_files
+        | where_exp: "f", "f.path contains '/assets/img/photos/full/'"
+        | sort: "name" %}
+    {%- for photo in photos %}
+    <image:image>
+      <image:loc>{{ photo.path | absolute_url }}</image:loc>
+    </image:image>
+    {%- endfor %}
+  </url>
+</urlset>

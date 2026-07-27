@@ -100,6 +100,15 @@ The four **home-page featured** images are separate and manually curated: put
 whatever four you want in `assets/img/featured/`. They're not run through the
 script; the home page just picks up whatever is there.
 
+**Downstream auto-updates on next build** (no manual step needed):
+
+- **`/photos/` gallery grid** — scans `assets/img/photos/full/` at build time,
+  so a new derivative appears automatically.
+- **`/sitemap-images.xml`** (Google image-search sitemap) — enumerates the
+  same folder at build time; new photos become discoverable to Google on
+  the next crawl after Actions redeploys. See
+  [docs/seo-runbook.md](docs/seo-runbook.md#-non-negotiable-image-sitemap-coverage).
+
 ---
 
 ## Managing tributes

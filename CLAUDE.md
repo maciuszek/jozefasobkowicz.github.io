@@ -48,6 +48,8 @@ Enforce this when adding anything new. Do NOT restate; link.
   [docs/github-runbook.md](docs/github-runbook.md)
 - DNS / custom domain / registrar / email hosting →
   [docs/dns-runbook.md](docs/dns-runbook.md)
+- Search-visibility / SEO / Google Search Console post-cutover
+  actions → [docs/seo-runbook.md](docs/seo-runbook.md)
 - One-time WordPress → Jekyll migration record →
   [docs/godaddy-migration.md](docs/godaddy-migration.md)
 - **Live migration checklist** (what's done, what's pending, future tweaks) →
@@ -101,6 +103,21 @@ Enforce this when adding anything new. Do NOT restate; link.
   a redundant email invite is dropped. `contact_email` still shows in
   the footer for general contact. If the discussion is ever formally
   locked, revisit whether an email invite belongs back on the page.
+- **SEO pre-cutover work done, 2026-07-27** — apex canonical URL,
+  dynamic image sitemap at [sitemap-images.xml](sitemap-images.xml)
+  (215 entries), default `og:image` via `defaults:` block in
+  [_config.yml](_config.yml), curated per-page descriptions. SEO
+  principles for future edits captured in
+  [docs/seo-runbook.md § SEO principles applied](docs/seo-runbook.md#seo-principles-applied-for-future-edits).
+  Full head-to-head vs. WordPress + Yoast + NextGEN pinned in
+  [docs/godaddy-migration.md § SEO comparison](docs/godaddy-migration.md#seo-comparison-at-cutover-2026-07-27),
+  including raw samples that are unrecoverable once WordPress is
+  offline. **User declared "SEO done" for pre-cutover.** Four small
+  improvements are deferred (alt text on gallery `<img>`,
+  `<image:title>`/`<image:caption>` on the image sitemap, dedup
+  duplicate title/description head tags, Yoast-equivalent robots
+  directive) — captured in DEVIATION *Future tweaks* + migration doc.
+  **Do NOT re-propose these as urgent.**
 
 ## Workflow with the user
 
@@ -132,8 +149,13 @@ Snapshot (as of last audit; verify against DEVIATION file):
 - Remaining migration work:
   - Section D of DEVIATION: apex DNS switchover, HTTPS enforcement,
     cancel GoDaddy hosting.
+  - Section E2 of DEVIATION: post-cutover Google Search Console work
+    (submit sitemap + image sitemap, request indexing, remove outdated
+    content — the old `/blog/`, `/messages-from-loved-ones/`, and
+    NextGEN image paths).
   - End-of-migration cleanup section: review AI translations, remove
     direnv config, fill Recorded values, decide fate of
     `HANDOFF-PROMPT.md`, optional Giscus OAuth revocation.
-  - Optional future tweaks: favicon variations (see the *Future tweaks*
-    section at the end of the DEVIATION file).
+  - Optional future tweaks: favicon variations + 4 deferred SEO
+    improvements (see the *Future tweaks* section at the end of the
+    DEVIATION file).

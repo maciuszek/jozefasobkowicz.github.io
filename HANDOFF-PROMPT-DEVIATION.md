@@ -128,6 +128,87 @@ the temp `*.github.io` site looks right.
 - [ ] 👤 Cancel GoDaddy **hosting** — keep the **domain registration**.
       Decide on email hosting first ([dns-runbook § Email hosting](docs/dns-runbook.md#email-hosting-jozefasobkowiczcom)).
 
+### E. SEO / search visibility (post-cutover)
+
+Canonical: [docs/seo-runbook.md](docs/seo-runbook.md). Two 🔴
+NON-NEGOTIABLES to close **before** cutover (image sitemap + tributes
+rename); everything else in this section runs in
+[Google Search Console](https://search.google.com/search-console?resource_id=sc-domain%3Ajozefasobkowicz.com)
+**after** the site is live on `jozefasobkowicz.com`. The existing
+domain property already covers both apex + `www` — no re-registration.
+
+#### E1. Before cutover (in the repo)
+
+- [✓] 🤖 🔴 **Image sitemap** — implemented as
+      [sitemap-images.xml](sitemap-images.xml) at repo root; enumerates
+      `assets/img/photos/full/` dynamically at every build. Verified:
+      `_site/sitemap-images.xml` emits 215 `<image:loc>` entries with
+      absolute apex URLs, and `sitemap: false` front-matter keeps it
+      out of the pages sitemap. See
+      [seo-runbook § Image sitemap coverage](docs/seo-runbook.md#-non-negotiable-image-sitemap-coverage).
+- [✓] 🤖 Added default **`og:image`** — `defaults:` block in
+      [_config.yml](_config.yml) points every page at
+      `/assets/img/featured/DSC_0655.jpg`. Verified: all 4 built pages
+      emit `<meta property="og:image" content="https://jozefasobkowicz.com/assets/img/featured/DSC_0655.jpg">`.
+      Per-page override still works via front-matter `image:` if a
+      specific page ever needs a different card.
+- [✓] 👤 Tightened thin `description:` front-matter on
+      [photos.html](photos.html) and enriched [about.md](about.md);
+      others kept as-is. SEO principles captured in
+      [seo-runbook § SEO principles applied](docs/seo-runbook.md#seo-principles-applied-for-future-edits).
+- [✓] 👤 Rebuilt + spot-checked: every built page has `<link
+      rel="canonical">` (apex), `<meta name="description">` (distinct
+      per page), `<meta property="og:image">` (defaulted to
+      `DSC_0655.jpg`), and `sitemap-images.xml` enumerates all 215
+      photos.
+
+#### E2. After cutover (in Google Search Console)
+
+Run these in order after DNS resolves + HTTPS is enforced.
+
+- [ ] 👤 **Verify canonical host** — in a fresh incognito window,
+      request `https://www.jozefasobkowicz.com/tributes/`; confirm it
+      301-redirects to `https://jozefasobkowicz.com/tributes/` and
+      displays the Jekyll site.
+- [ ] 👤 **Remove the old Yoast sitemap** from Search Console, if
+      registered (e.g. `sitemap_index.xml`). Sitemaps → old entry →
+      *Remove sitemap*. Yoast generated it dynamically; it will 404
+      once WordPress is gone.
+- [ ] 👤 **Submit the new sitemap(s):**
+      `https://jozefasobkowicz.com/sitemap.xml` (pages), and
+      `https://jozefasobkowicz.com/sitemap-images.xml` (photos, if
+      implemented as a separate file). Sitemaps → *Add a new sitemap*.
+- [ ] 👤 **Request indexing** for the four canonical pages, via URL
+      Inspection (one at a time):
+      `/`, `/about/`, `/photos/`, `/tributes/`.
+- [ ] 👤 **Remove outdated content** — via
+      [Removals → Outdated Content](https://search.google.com/search-console/remove-outdated-content) —
+      for URLs that now 404:
+      - `/messages-from-loved-ones/` (retired; replaced by
+        `/tributes/`).
+      - Old NextGEN image paths under `/wp-content/gallery/…` — Google
+        drops dead URLs on its own eventually; this just hurries it.
+        If the index has many, focus on the highest-traffic entries
+        surfaced in the Search Console index report.
+- [ ] 👤 **No action needed for `/`, `/about/`, `/photos/`** (same
+      URLs, new content). Stale snippets refresh automatically over
+      the next few crawl cycles. Patience for a few weeks.
+- [ ] 👤 **~1 week after cutover — verify** — revisit Search Console
+      Coverage / Index. Confirm the four Jekyll URLs are indexed with
+      current content, the retired URLs no longer surface, and the
+      image sitemap was fetched. Investigate any surprises (sitemap
+      not fetched, image sitemap ignored, unexpected 404s).
+
+#### E3. Also worth doing (owner-side, one-time)
+
+- [ ] 👤 Update any external inbound links pointing at
+      `/messages-from-loved-ones/` — obituary sites, funeral home page,
+      social profiles, personal email signatures, family group chats.
+      One-time, out-of-scope for the repo; just don't forget.
+- [ ] 👤 A week after cutover, search *"Jozefa Sobkowicz"* in Google
+      (incognito) — confirm the new site appears with the current
+      title + description, not the WordPress snippet.
+
 ---
 
 ## End-of-migration cleanup
@@ -197,3 +278,29 @@ in Georgia serif. Possible refinements:
 
 Browsers cache favicons aggressively — hard-refresh (Ctrl+Shift+R) or a
 private window is usually needed to see edits.
+
+### SEO refinements (deferred)
+
+Four small improvements considered during the pre-cutover analysis
+against WordPress + Yoast + NextGEN Gallery. None block ranking or
+cutover; captured here so they aren't lost. **Full context, exact
+diffs, and — critically — verbatim samples of the WordPress state at
+the time of comparison** (needed because once WordPress is offline
+that reference is unrecoverable) live in
+[docs/godaddy-migration.md § SEO comparison at cutover](docs/godaddy-migration.md#seo-comparison-at-cutover-2026-07-27).
+
+- **Alt text on `<img>` tags in `/photos/`** — currently `alt=""` on
+  all 215; replace with a generic `"Photograph of Jozefa Sobkowicz"`.
+  Accessibility win, minor SEO signal.
+- **`<image:title>` / `<image:caption>` on
+  [sitemap-images.xml](sitemap-images.xml)** entries — WordPress had
+  these (populated with filenames); we have `<image:loc>` only.
+- **Remove duplicate `<title>` and `<meta name="description">`** from
+  [_includes/head.html](_includes/head.html) — jekyll-seo-tag already
+  emits both. Cosmetic dedup.
+- **Yoast-equivalent `<meta name="robots">` snippet directives** in
+  [_includes/head.html](_includes/head.html): the exact string is
+  captured in the migration doc.
+
+If any becomes a priority, promote it into
+[docs/seo-runbook.md](docs/seo-runbook.md) as an active checklist item.
