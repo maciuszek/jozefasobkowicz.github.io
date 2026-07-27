@@ -147,7 +147,8 @@ this doc becomes an as-built record, not just a plan.
 
 While logged into GitHub as the owner account, open the deployed `/tributes/`
 and, via the Giscus composer, post each entry from
-[_data/messages.yml](../_data/messages.yml) as a **separate comment**.
+[_data/messages.yml](../_data/messages.yml) as a **separate comment** —
+**18 total** at the time of the initial seeding.
 
 For a copy-paste-ready rendering (attribution header + body + translation
 blockquote already formatted, sorted chronologically), from the repo root
@@ -162,6 +163,14 @@ the composer, click *Comment*, repeat. This is the standard seeding path.
 The script is a pure read of `_data/messages.yml` — safe to re-run at any
 time (see [Managing tributes](../README.md#managing-tributes) in the
 README).
+
+**Historical note (initial seeding, 2026-07-26):** the tributes were
+originally seeded against the transitional `v2.jozefasobkowicz.com`
+staging subdomain, since retired at DNS cutover. Giscus maps threads
+by pathname regardless of hostname, so the same Discussion is now
+visible at the apex `https://jozefasobkowicz.com/tributes/`. If you
+ever re-seed against a new staging URL, the same thread will be
+reused as long as the pathname (`/tributes/`) matches.
 
 The first time you click **Sign in with GitHub** in the composer,
 GitHub prompts you to authorize Giscus with three permissions:

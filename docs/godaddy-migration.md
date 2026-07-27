@@ -314,8 +314,10 @@ capture:
 - `https://www.jozefasobkowicz.com/wp-content/gallery/photos/*.jpg` (many)
 - `https://www.jozefasobkowicz.com/wp-content/uploads/2020/08/*.jpg` (multiple)
 
-Removal via GSC after cutover — see
-[seo-runbook.md](seo-runbook.md) + DEVIATION § E2.
+Removal via GSC after cutover — procedure in
+[seo-runbook § Post-cutover: Removals](seo-runbook.md#post-cutover-removals);
+record of what was submitted (and when) in
+[../TASKS.md § G2](../TASKS.md#g2-after-cutover-in-google-search-console).
 
 ---
 

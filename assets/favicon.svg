@@ -1,3 +1,29 @@
+<!--
+  Favicon for jozefasobkowicz.com. Dark-ink rounded square with warm
+  gold "JS" in a serif face. Palette drawn from the site's CSS
+  variables. Referenced from _includes/head.html.
+
+  Design tweaks parked for later (all optional, none affect the
+  migration). TASKS.md * Future tweaks * has a short pointer back to
+  this comment.
+
+    * Swap colors — paper (#FBF8F2) background with ink/gold letters
+      for a lighter feel.
+    * Different serif — Baskerville, Playfair Display, EB Garamond,
+      Cormorant. Just change the font-family attribute.
+    * Letter spacing — add letter-spacing="-0.02em" (tighter) or a
+      positive value (airier) on the <text> element.
+    * No square background — remove the <rect> for free-floating "JS"
+      letters on a transparent background.
+    * Full-color match to Fraunces — pre-render "JS" as SVG <path>
+      elements using the site's actual Fraunces face. Requires
+      external tooling (Inkscape / Fontforge / online SVG
+      text-to-path converter); payoff is the favicon glyph matches
+      the headline face exactly.
+
+  Browsers cache favicons aggressively — hard-refresh
+  (Ctrl+Shift+R) or a private window is usually needed to see edits.
+-->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <rect width="32" height="32" rx="6" fill="#2B2622"/>
   <text x="16" y="22.5"

@@ -8,9 +8,10 @@ WordPress → Jekyll cutover.
 
 **Google Search Console:** the existing domain property
 [`sc-domain:jozefasobkowicz.com`](https://search.google.com/search-console?resource_id=sc-domain%3Ajozefasobkowicz.com)
-covers both `www` and apex — no re-registration needed. All post-cutover
-GSC steps (submit sitemap, request indexing, remove outdated content) live
-in [HANDOFF-PROMPT-DEVIATION.md § E](../HANDOFF-PROMPT-DEVIATION.md).
+covers both `www` and apex — no re-registration needed. Post-cutover
+GSC procedures live in this runbook under
+[Post-cutover procedures](#post-cutover-procedures); [TASKS.md § G](../TASKS.md#g-seo--search-visibility-post-cutover)
+records what was actually run and when.
 
 ---
 
@@ -40,7 +41,8 @@ in [HANDOFF-PROMPT-DEVIATION.md § E](../HANDOFF-PROMPT-DEVIATION.md).
 - **/tributes/ rename (was /blog/, originally /messages-from-loved-ones/):**
   the messages page URL, nav label, page heading all use "Tributes."
   Old WordPress URL `/messages-from-loved-ones/` will 404 after cutover
-  and is scheduled for GSC removal (see DEVIATION § E).
+  and is scheduled for GSC removal (see
+  [Post-cutover: Removals](#post-cutover-removals)).
 - **Not preserving the old URL** via HTML stub / `<meta http-equiv="refresh">`.
   Considered; rejected. Adds a stub page for a URL Google will drop
   within a few crawl cycles regardless. Cleaner to remove via GSC.
@@ -86,7 +88,7 @@ tags.**
       for search engines other than Google, which we're not
       prioritizing (see *Deliberate non-goals*).
 - [x] Alternative taken 2026-07-27: both sitemaps submitted separately
-      to Google Search Console (DEVIATION § E2).
+      to Google Search Console (TASKS.md § G2).
 
 **Dynamic by design — no upkeep as photos come and go.** The Liquid
 template runs on every `jekyll build`, enumerates whatever's currently
@@ -103,7 +105,7 @@ Already applied in code (nothing to do):
 
 - [x] Nav label + page heading + permalink all say "Tributes."
 - [x] Post-cutover follow-up done 2026-07-27: `/messages-from-loved-ones/`
-      submitted to GSC Removals tool. See DEVIATION § E2.
+      submitted to GSC Removals tool. See TASKS.md § G2.
 
 ### 🟡 Default `og:image` (social preview card)
 
@@ -191,6 +193,184 @@ Verified 2026-07-27:
 
 ---
 
+## Post-cutover procedures
+
+Run these after DNS resolves + HTTPS is enforced. TASKS.md § G2
+records what was actually run and when; this section documents *how*.
+
+### Verify canonical host
+
+In a fresh incognito window, request
+`https://www.jozefasobkowicz.com/tributes/`. Expected:
+HTTP 301 → `https://jozefasobkowicz.com/tributes/`, then the Jekyll
+site renders with a valid TLS certificate. If the redirect doesn't
+happen, GitHub Pages hasn't seen the CNAME as apex — check
+Settings → Pages → Custom domain.
+
+### Submit new sitemaps
+
+Google Search Console → **Sitemaps** → *Add a new sitemap*. Submit
+both:
+
+- `https://jozefasobkowicz.com/sitemap.xml` (page URLs — 4 entries)
+- `https://jozefasobkowicz.com/sitemap-images.xml` (215 image entries)
+
+Two entries rather than one because our image sitemap is a separate
+file (see NON-NEGOTIABLE above for why).
+
+### Remove the old Yoast sitemap
+
+If a Yoast-generated sitemap (e.g. `sitemap_index.xml`) was ever
+registered in Search Console, remove it here: **Sitemaps** → find the
+old entry → *Remove sitemap*. Once WordPress hosting is cancelled the
+URL will 404 and Google will drop it naturally within a few crawl
+cycles; manual removal just accelerates.
+
+### Request indexing (new + renamed URLs)
+
+Google Search Console → **URL Inspection** (top search bar) → paste
+the full URL → wait for fetch → **Request indexing**. Do this for the
+four canonical Jekyll URLs. Suggested order (highest priority first,
+so the brand-new URL gets crawled soonest):
+
+1. `https://jozefasobkowicz.com/tributes/` — new URL, replaces the
+   retired `/messages-from-loved-ones/`
+2. `https://jozefasobkowicz.com/`
+3. `https://jozefasobkowicz.com/photos/`
+4. `https://jozefasobkowicz.com/about/`
+
+Google throttles to ~10 requests/day per property — 4 URLs is well
+within limits.
+
+**Known behavior: `/tributes/` returns "Soft 404" on first-pass URL
+Inspection.** Root cause: Giscus renders comments inside a
+JavaScript-injected iframe, so Google's first-pass crawler sees
+near-empty HTML (intro paragraph + empty `<div class="giscus">`
+placeholder). Google's JS-rendering pass runs asynchronously and may
+reclassify + index the page days-to-weeks later. See
+[Deliberate non-goals](#deliberate-non-goals-things-not-to-add) for
+the accept-and-wait decision + exit condition.
+
+### Post-cutover: Removals
+
+Retire indexed URLs that no longer exist on the new site (WordPress-era
+pages + NextGEN images). **Tool:** the site-owner **Removals** tool at
+[search.google.com/search-console/removals?resource_id=sc-domain%3Ajozefasobkowicz.com](https://search.google.com/search-console/removals?resource_id=sc-domain%3Ajozefasobkowicz.com).
+Do NOT use the public [Remove Outdated Content](https://search.google.com/search-console/remove-outdated-content)
+tool — that's for non-owners and requires approval; Google's own
+callout on that page points site owners at Removals ("faster and
+doesn't require approval").
+
+**Inside the tool:** default **Temporary Removals** tab → **New Request**
+→ default **Temporarily Remove URL** sub-tab (not *Clear Snippet* —
+that just refreshes the cached description without removing the
+result). Two request types:
+
+- **Remove this URL only** — hides a single URL for ~6 months.
+- **Remove all URLs with this prefix** — hides everything under a
+  path prefix for ~6 months (the wildcard option — much better for
+  large sets like the NextGEN image tree).
+
+One request covers all URL variations (`http`/`https`, `www`/non-`www`)
+— you don't submit separate requests per variant. Google typically
+approves site-owner Removals within 24 hours; status flows
+*Processing request* → *Approved* → *Complete*.
+
+**URLs to remove for this site:**
+
+1. Single URL: `https://jozefasobkowicz.com/messages-from-loved-ones/`
+   — retired WordPress page; replaced by `/tributes/`.
+2. Single URL: `https://jozefasobkowicz.com/blog/` — WordPress's other
+   entry point for the same content; Yoast's post-sitemap listed both.
+3. Prefix: `https://jozefasobkowicz.com/wp-content/` — covers NextGEN
+   gallery images (`/wp-content/gallery/*`), WordPress uploads
+   (`/wp-content/uploads/*`, including the featured photos Yoast had
+   in `page-sitemap.xml`), plus themes/plugins/cache paths. All 404
+   on GitHub Pages.
+
+**Don't use this tool for `/`, `/about/`, `/photos/`** — those URLs
+still serve real content on the new site. Request Indexing (above) is
+the right mechanism for those, which triggers a re-crawl and refreshes
+Google's cached snippet naturally.
+
+**Why it's effectively permanent even though the tool is
+"temporary":** Removals is a ~6-month hide, but since our old URLs
+now return 404 on GitHub Pages, Google's crawler drops them from the
+index naturally within that window. So the hide is temporary; the
+removal is permanent. No follow-up action needed beyond confirming
+each request moves to *Approved*.
+
+### Post-cutover: Verification schedule
+
+Passive calendar checkpoints — do these after the actions above, then
+walk away and revisit at the intervals below. TASKS.md § G2 tracks
+which have been done.
+
+**~1–2 days after Removals submission:** revisit the Removals tool.
+All submitted requests should have moved from *Processing request* →
+*Approved*. If any is *Denied*, click through for the reason
+(usually URL syntax or a scope mismatch) and resubmit.
+
+**~1 week after cutover:** revisit Search Console **Coverage / Index**.
+Confirm:
+
+- The four Jekyll URLs are indexed with current content.
+- Retired URLs no longer surface in fresh queries.
+- The image sitemap was fetched (Sitemaps → status).
+
+Investigate any surprises — sitemap not fetched, image sitemap
+ignored, unexpected 404s on live URLs. Then run an incognito Google
+search for *"Jozefa Sobkowicz"* — the top result should be the new
+site with the current title + description, not the WordPress snippet.
+
+**~2 weeks after cutover: `/tributes/` Soft 404 re-check.** Re-run
+URL Inspection on `https://jozefasobkowicz.com/tributes/`.
+
+- If it now indexes cleanly, Google's JS-rendering pass caught up.
+  Nothing more to do.
+- If it still shows Soft 404, revisit the accept-and-wait decision in
+  [Deliberate non-goals](#deliberate-non-goals-things-not-to-add).
+  The fix path: flip `messages_display` in
+  [`_config.yml`](../_config.yml) to `both` (adds server-rendered
+  tribute list above the widget) or `static` (drops widget entirely,
+  cleaner SEO but changes the visitor experience).
+
+---
+
+## Deferred improvements
+
+Four small SEO improvements considered during the pre-cutover
+analysis against WordPress + Yoast + NextGEN Gallery. None block
+ranking or cutover; user parked them for later consideration. TASKS.md
+*Future tweaks* has short pointers back here.
+
+**Full context, exact diffs, and — critically — verbatim samples of
+the WordPress state at the time of comparison** (unrecoverable once
+WordPress is offline) live in
+[docs/godaddy-migration.md § SEO comparison at cutover](godaddy-migration.md#seo-comparison-at-cutover-2026-07-27).
+That's the reference doc; this section just summarises.
+
+1. **Alt text on `<img>` tags in `/photos/`** — currently `alt=""` on
+   all 215 images; replace with a generic
+   `alt="Photograph of Jozefa Sobkowicz"`. Accessibility win, minor
+   SEO signal.
+2. **`<image:title>` / `<image:caption>` on
+   [sitemap-images.xml](../sitemap-images.xml)** entries — WordPress
+   had these (populated with filenames); we emit `<image:loc>` only.
+3. **Remove duplicate `<title>` and `<meta name="description">`** from
+   [_includes/head.html](../_includes/head.html) — jekyll-seo-tag
+   already emits both. Cosmetic dedup; both currently render, which
+   is harmless but noisy in view-source.
+4. **Yoast-equivalent `<meta name="robots">` snippet directives** in
+   [_includes/head.html](../_includes/head.html) — exact string
+   captured in the migration doc.
+
+If any of these becomes a priority, move it up into the pre-cutover
+checklist (or a new "Post-cutover improvements" checklist) with a `[ ]`
+box.
+
+---
+
 ## Deliberate non-goals (things NOT to add)
 
 - **Server-render the tribute list to solve Giscus Soft 404** —
@@ -211,7 +391,7 @@ Verified 2026-07-27:
 - **Sitemap `<lastmod>` / `<priority>`** — see Decisions above.
 - **Bing Webmaster Tools / Yandex / other search engines' owner
   consoles** — we DO run the full post-cutover workflow in Google
-  Search Console (see DEVIATION § E2). What we're skipping here is the
+  Search Console (see TASKS.md § G2). What we're skipping here is the
   equivalent owner-console dance for *other* engines. Reason: memorial
   site with modest traffic; Bing / Yandex / etc. crawlers will still
   discover the new site via existing inbound links and Google's index

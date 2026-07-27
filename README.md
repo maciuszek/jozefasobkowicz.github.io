@@ -178,8 +178,13 @@ on building and using the repo:
   build, Discussions, Giscus. Setup + ongoing maintenance + handoff.
 - **[docs/dns-runbook.md](docs/dns-runbook.md)** — custom domain, GoDaddy DNS
   records, HTTPS, annual renewal, email-hosting decisions.
+- **[docs/seo-runbook.md](docs/seo-runbook.md)** — search visibility, sitemaps,
+  post-cutover Google Search Console procedures.
 - **[docs/godaddy-migration.md](docs/godaddy-migration.md)** — one-time
   historical record of the WordPress → Jekyll migration.
+- **[TASKS.md](TASKS.md)** — task journal (what's done, what's pending,
+  what changed and when). Pairs with the runbooks: they own *how / why*,
+  TASKS.md owns *what / when*.
 
 Comments on `/tributes/` are backed by GitHub Discussions via Giscus — see the
 GitHub runbook for setup.

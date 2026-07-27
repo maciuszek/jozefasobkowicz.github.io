@@ -152,15 +152,50 @@ Certificates auto-renew — no ongoing action required.
 
 ## 6. Post-migration cleanup
 
-After the domain resolves cleanly and HTTPS is enforced:
+After the domain resolves cleanly and HTTPS is enforced, and the
+[Cutover verification checklist](#cutover-verification-checklist) is
+all green:
 
 - [ ] **Cancel GoDaddy hosting** — but only the *hosting* plan.
       **Keep the domain registration.** These are separate line items in
-      GoDaddy; make sure you cancel the right one.
+      GoDaddy; make sure you cancel the right one. See
+      [Cancel GoDaddy hosting](#cancel-godaddy-hosting) below for
+      what happens next.
 - [ ] If applicable, cancel WordPress-specific add-ons (Managed
       WordPress, SSL, security scans).
 - [ ] Day 1 after cancellation: confirm the domain still resolves and
       the mailbox (if kept) still works.
+
+### Cancel GoDaddy hosting
+
+The hosting plan and the domain registration are **separate GoDaddy
+products** with separate billing lines. **Cancel hosting; keep
+registration.** Losing the domain registration would forfeit the
+memorial URL to a squatter after the grace period.
+
+**Decide on email hosting first.** Some GoDaddy email plans are
+bundled with the hosting plan and terminate on cancellation. See
+[Email hosting](#email-hosting-jozefasobkowiczcom) below for the
+three options (keep at GoDaddy standalone, move provider, turn off).
+MX records may need to change; do that before cancelling.
+
+**Implicit side effect: the WordPress backup at
+`old.jozefasobkowicz.com` goes away.** Cancelling hosting shuts down
+the cPanel/WordPress server at `107.180.26.81`, so anything on the
+`old.` subdomain stops responding. The `.old` DNS records at GoDaddy
+persist as dead pointers until manually pruned per
+[Cleanup backlog](#cleanup-backlog-post-wordpress-decommission)
+below. Prune those after cancelling hosting; not before (they still
+serve the backup while WordPress is up).
+
+**Ordered sequence:**
+
+1. Decide + configure email (Keep / Move / Off — see Email hosting).
+2. Confirm no one is relying on `old.jozefasobkowicz.com`.
+3. Cancel the hosting plan in GoDaddy.
+4. Verify the new site still resolves and (if applicable) the mailbox
+   still works.
+5. Prune the `.old` DNS records (Cleanup backlog).
 
 ---
 

@@ -52,10 +52,18 @@ Enforce this when adding anything new. Do NOT restate; link.
   actions → [docs/seo-runbook.md](docs/seo-runbook.md)
 - One-time WordPress → Jekyll migration record →
   [docs/godaddy-migration.md](docs/godaddy-migration.md)
-- **Live migration checklist** (what's done, what's pending, future tweaks) →
-  [HANDOFF-PROMPT-DEVIATION.md](HANDOFF-PROMPT-DEVIATION.md)
-- Original browser-Claude handoff prompt (historical) →
-  [HANDOFF-PROMPT.md](HANDOFF-PROMPT.md) — kept verbatim; do not edit.
+- **Task journal** (what's done, what's pending, future tweaks) →
+  [TASKS.md](TASKS.md). Consolidates the earlier `HANDOFF-PROMPT.md`
+  (browser Claude's original 8-task plan) and `HANDOFF-PROMPT-DEVIATION.md`
+  (execution record); both remain in git history if the verbatim
+  originals are ever needed. **Permanent file** — kept as an ongoing
+  journal, not deleted at end of migration. Ticking every checkbox
+  does NOT mean removing the file.
+  - **Split of concerns:** runbooks own procedures / decisions /
+    rationale (evergreen "how / why / what we chose"); TASKS.md owns
+    the checklist and timeline (chronological "what happened when").
+    No step should live *only* in TASKS.md — if it describes a
+    procedure, that procedure belongs in a runbook.
 
 ## Decisions already made — don't re-litigate
 
@@ -77,9 +85,10 @@ Enforce this when adding anything new. Do NOT restate; link.
   in [assets/img/featured/](assets/img/featured/); home page lists them
   alphabetically.
 - **Page URL is `/tributes/`** (formerly `/blog/`). Nav label is "Tributes";
-  matches the GitHub Discussion category name. The `HANDOFF-PROMPT.md`
-  still says "blog" and "Messages" — that's the historical prompt, do not
-  edit.
+  matches the GitHub Discussion category name. The original browser-Claude
+  prompt (now in git history under `HANDOFF-PROMPT.md`) still says "blog"
+  and "Messages" — that's historical context; TASKS.md preserves the
+  rename explanation.
 - **Tribute data lives in `_data/messages.yml`; paste blocks are regenerated
   via `scripts/print-paste-blocks.rb`.** YAML preserves original curated
   order; the script sorts chronologically at print time (ties = YAML
@@ -122,8 +131,10 @@ Enforce this when adding anything new. Do NOT restate; link.
   improvements are deferred (alt text on gallery `<img>`,
   `<image:title>`/`<image:caption>` on the image sitemap, dedup
   duplicate title/description head tags, Yoast-equivalent robots
-  directive) — captured in DEVIATION *Future tweaks* + migration doc.
-  **Do NOT re-propose these as urgent.**
+  directive) — captured in
+  [seo-runbook § Deferred improvements](docs/seo-runbook.md#deferred-improvements)
+  + the migration-doc comparison section. **Do NOT re-propose these
+  as urgent.**
 
 ## Workflow with the user
 
@@ -135,11 +146,10 @@ Enforce this when adding anything new. Do NOT restate; link.
 
 ## Progress + remaining work
 
-[HANDOFF-PROMPT-DEVIATION.md](HANDOFF-PROMPT-DEVIATION.md) is the live
-checklist with 👤/🤖 attribution and ✓ marks. Consult it for authoritative
-state.
+[TASKS.md](TASKS.md) is the live checklist with 👤/🤖 attribution and
+✓ marks. Consult it for authoritative state.
 
-Snapshot (as of last audit; verify against DEVIATION file):
+Snapshot (as of last audit; verify against [TASKS.md](TASKS.md)):
 - Repo: `maciuszek/jozefasobkowicz.github.io` — a project site (owner
   already had `maciuszek.github.io` reserved), served via GitHub Actions
   build of Jekyll.
@@ -157,22 +167,29 @@ Snapshot (as of last audit; verify against DEVIATION file):
 - Tributes seeded to the GitHub Discussion. Announcement category =
   maintainer-only thread creation; no formal per-thread lock (see
   decisions above).
-- Remaining migration work:
-  - DEVIATION § D final step: cancel GoDaddy **hosting** (keep the
-    **domain registration**). Once hosting is cancelled, the `old.`
-    subdomain also becomes dead — then the associated legacy DNS
-    records get pruned per
+- Remaining migration work (verify against [TASKS.md](TASKS.md) —
+  authoritative):
+  - [TASKS.md § F](TASKS.md#f-custom-domain--dns-original-task-8)
+    final step: cancel GoDaddy **hosting** (keep the **domain
+    registration**). Once hosting is cancelled, the `old.` subdomain
+    also becomes dead — then the associated legacy DNS records get
+    pruned per
     [dns-runbook § Cleanup backlog](docs/dns-runbook.md#cleanup-backlog-post-wordpress-decommission).
-  - DEVIATION § E2: post-cutover Google Search Console work (submit
-    sitemap + image sitemap, request indexing, remove outdated content
-    — the old `/blog/`, `/messages-from-loved-ones/`, and NextGEN
-    image paths).
-  - DEVIATION § End-of-migration cleanup: review AI translations,
-    remove direnv config, fill Recorded values, decide fate of
-    `HANDOFF-PROMPT.md`, optional Giscus OAuth revocation.
-  - Optional future tweaks: favicon variations + 4 deferred SEO
-    improvements (see the *Future tweaks* section at the end of the
-    DEVIATION file).
+  - [TASKS.md § G2](TASKS.md#g2-after-cutover-in-google-search-console):
+    remaining Google Search Console verification checkpoints — most
+    G2 items were done 2026-07-27 (sitemap submission, request
+    indexing, Removals for outdated content); what's left are
+    calendar checks (~1–2 days, ~1 week, ~2 weeks) and removing the
+    old Yoast sitemap from GSC.
+  - [TASKS.md § End-of-migration cleanup](TASKS.md#end-of-migration-cleanup):
+    review AI translations, remove direnv config, fill Recorded
+    values, prune legacy DNS records. (TASKS.md itself stays — it's a
+    permanent journal.)
+  - Optional future tweaks: favicon variations (details in the
+    comment at the top of [assets/favicon.svg](assets/favicon.svg))
+    + 4 deferred SEO improvements (details in
+    [docs/seo-runbook.md § Deferred improvements](docs/seo-runbook.md#deferred-improvements)).
+    Both are indexed from [TASKS.md § Future tweaks](TASKS.md#future-tweaks-low-priority-backlog).
 - **Historical: v2 subdomain retired.** `v2.jozefasobkowicz.com` was
   used as a transitional staging URL during pre-cutover testing and
   tribute seeding. Its CNAME record was removed at cutover; the URL
