@@ -107,11 +107,17 @@ this doc becomes an as-built record, not just a plan.
    - Repository: `<owner>/<repo>`
    - Page ↔ Discussions Mapping: **pathname**
    - Discussion Category: the one created in Step 3
-   - Features: leave reactions enabled if you want them
+   - Features: **turn reactions OFF** — a memorial page reads better
+     without an emoji-picker header above the tributes.
    - Theme: doesn't matter here — `_config.yml` sets it
 3. From the generated `<script>` block, copy four values:
    `data-repo`, `data-repo-id`, `data-category`, `data-category-id`.
-4. Paste into [_config.yml](../_config.yml)'s `giscus:` block. Example:
+4. Paste into [_config.yml](../_config.yml)'s `giscus:` block. The four
+   values below are examples; the other three settings
+   (`reactions_enabled`, `theme`, `input_position`) are the deliberate
+   memorial-site choices for this repo — see the [CLAUDE.md
+   Decisions section](../CLAUDE.md#decisions-already-made--dont-re-litigate)
+   for reasoning:
    ```yaml
    giscus:
      repo: "<owner>/<repo>"
@@ -119,8 +125,9 @@ this doc becomes an as-built record, not just a plan.
      category: "Tributes"
      category_id: "DIC_kw..."
      mapping: "pathname"
-     reactions_enabled: "1"
-     theme: "light"
+     reactions_enabled: "0"           # hide emoji reactions row
+     theme: "preferred_color_scheme"  # auto light/dark from visitor OS
+     input_position: "bottom"         # composer below the tribute list
      lang: "en"
    ```
 5. Commit + push. Wait for Actions to redeploy (~1–2 min). Reload `/tributes/` —

@@ -126,7 +126,8 @@ the temp `*.github.io` site looks right.
 - [✓] 👤 In GoDaddy DNS, replace apex records with the four GitHub
       Pages A records + `www` CNAME →
       [dns-runbook § 3](docs/dns-runbook.md#3-configure-godaddy-dns-records).
-- [ ] 👤 Wait for propagation; verify with `dig`.
+- [✓] 👤 Wait for propagation; verified with `dig`. Apex resolves to
+      the four GitHub Pages IPs; `www` CNAME → `maciuszek.github.io.`.
 - [✓] 👤 **Settings → Pages → Enforce HTTPS:** tick (after cert issues).
 - [ ] 👤 Cancel GoDaddy **hosting** — keep the **domain registration**.
       Decide on email hosting first ([dns-runbook § Email hosting](docs/dns-runbook.md#email-hosting-jozefasobkowiczcom)).
@@ -186,18 +187,60 @@ Run these in order after DNS resolves + HTTPS is enforced.
       `https://jozefasobkowicz.com/sitemap.xml` (pages), and
       `https://jozefasobkowicz.com/sitemap-images.xml` (photos, if
       implemented as a separate file). Sitemaps → *Add a new sitemap*.
-- [ ] 👤 **Request indexing** for the four canonical pages, via URL
-      Inspection (one at a time):
-      `/`, `/about/`, `/photos/`, `/tributes/`.
-- [ ] 👤 **Remove outdated content** — via
-      [Removals → Outdated Content](https://search.google.com/search-console/remove-outdated-content) —
-      for URLs that now 404:
-      - `/messages-from-loved-ones/` (retired; replaced by
-        `/tributes/`).
-      - Old NextGEN image paths under `/wp-content/gallery/…` — Google
-        drops dead URLs on its own eventually; this just hurries it.
-        If the index has many, focus on the highest-traffic entries
-        surfaced in the Search Console index report.
+- [✓] 👤 **Request indexing** for the four canonical pages via **URL
+      Inspection** (the search bar at the very top of Search Console
+      labeled *"Inspect any URL in 'jozefasobkowicz.com'"*). Paste one
+      full URL, wait for the fetch, click **Request indexing**, repeat.
+      Google throttles to ~10 requests/day per property — 4 URLs is
+      well within limits. Suggested order (highest priority first, so
+      the brand-new URL gets crawled soonest):
+      1. `https://jozefasobkowicz.com/tributes/` — new URL, replaces
+         the retired `/messages-from-loved-ones/`
+      2. `https://jozefasobkowicz.com/`
+      3. `https://jozefasobkowicz.com/photos/`
+      4. `https://jozefasobkowicz.com/about/`
+
+      **Known: `/tributes/` returns "Soft 404" on first-pass URL
+      Inspection.** Root cause: Giscus renders comments inside a
+      JavaScript-injected iframe, so Google's first-pass crawler sees
+      near-empty HTML (intro paragraph + empty `<div class="giscus">`
+      placeholder). Google's JS-rendering pass runs asynchronously and
+      may reclassify + index the page days-to-weeks later. **Decision
+      (2026-07-27): accept and wait** — SEO on the tributes page is not
+      critical enough to justify server-rendering the tribute content
+      (which would mean flipping `messages_display` to `static` or
+      `both` and either dropping the widget or duplicating content). If
+      a re-check in ~2 weeks still shows Soft 404, revisit that
+      decision.
+- [✓] 👤 **Remove outdated content** — via the site-owner **Removals**
+      tool:
+      [search.google.com/search-console/removals?resource_id=sc-domain%3Ajozefasobkowicz.com](https://search.google.com/search-console/removals?resource_id=sc-domain%3Ajozefasobkowicz.com).
+      Submitted 2026-07-27 (all *Temporarily Remove URL*):
+      1. Single URL: `https://jozefasobkowicz.com/messages-from-loved-ones/`
+      2. Single URL: `https://jozefasobkowicz.com/blog/`
+      3. Prefix: `https://jozefasobkowicz.com/wp-content/gallery/`
+      4. Prefix: `https://jozefasobkowicz.com/wp-content/uploads/`
+
+      *If redoing from scratch, a single
+      `https://jozefasobkowicz.com/wp-content/` prefix covers items 3+4
+      plus themes/plugins/cache paths — all 404 on GitHub Pages.*
+
+      **Key side effect:** Removals from this tool are technically
+      *temporary* (~6-month hide), BUT since our old URLs now return
+      404 on GitHub Pages, Google's crawler drops them from the index
+      naturally within that window — so the effect is permanent for
+      our case. No follow-up beyond confirming the requests processed
+      (next item).
+
+      **Don't use for `/`, `/about/`, `/photos/`** — those still serve
+      real content; Request Indexing (previous step, already done) is
+      the right tool for them.
+- [ ] 👤 **~1–2 days after submission — confirm Removals processed** —
+      revisit the Removals tool. All four requests should have moved
+      from *Processing request* → *Approved*. Google typically
+      approves site-owner requests within 24 hours. If any is
+      *Denied*, click through for the reason (usually URL syntax or
+      scope) and resubmit.
 - [ ] 👤 **No action needed for `/`, `/about/`, `/photos/`** (same
       URLs, new content). Stale snippets refresh automatically over
       the next few crawl cycles. Patience for a few weeks.
@@ -206,6 +249,18 @@ Run these in order after DNS resolves + HTTPS is enforced.
       current content, the retired URLs no longer surface, and the
       image sitemap was fetched. Investigate any surprises (sitemap
       not fetched, image sitemap ignored, unexpected 404s).
+- [ ] 👤 **~2 weeks after cutover — re-check `/tributes/` Soft 404
+      specifically.** Re-run URL Inspection on
+      `https://jozefasobkowicz.com/tributes/`. If it now indexes
+      cleanly, Google's JS-rendering pass caught up and the page is
+      in the index — nothing more to do. If it still shows Soft 404,
+      revisit the accept-and-wait decision above (accept-and-wait was
+      captured 2026-07-27; the exit condition is this re-check). Fix
+      path is documented: flip `messages_display` in
+      [_config.yml](_config.yml) to `both` (adds server-rendered
+      tribute list above the widget) or `static` (drops widget, cleaner
+      SEO, doc-surface changes). See
+      [seo-runbook § Deliberate non-goals](docs/seo-runbook.md#deliberate-non-goals-things-not-to-add).
 
 #### E3. Also worth doing (owner-side, one-time)
 

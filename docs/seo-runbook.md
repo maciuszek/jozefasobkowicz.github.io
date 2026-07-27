@@ -71,22 +71,22 @@ otherwise photos won't rank in image search — a real traffic source
 under NextGEN. Current state: **`_site/sitemap.xml` has ZERO image
 tags.**
 
-- [ ] Implement image-sitemap coverage. Two viable approaches:
-  - **Custom `sitemap-images.xml.liquid`** at repo root that enumerates
-    `site.static_files` filtered to `assets/img/photos/full/`. Emits one
-    `<image:image>` per photo under the `/photos/` `<url>` entry. This
-    is the recommended approach — no plugin, no per-page front-matter
-    upkeep, scales with the gallery.
-  - Per-page `image:` front-matter (only sensible for pages with 1–3
-    representative images; not scalable to 215 photos).
-- [ ] Verify: built file exists at `_site/sitemap-images.xml` and
-      contains ~215 `<image:loc>` entries pointing at
-      `https://jozefasobkowicz.com/assets/img/photos/full/*.jpg`.
-- [ ] Update `robots.txt` to reference both sitemaps
-      (jekyll-sitemap's auto-generated one may need overriding with a
-      source-tracked `robots.txt` at repo root).
-- [ ] Alternative if it's easier: submit both sitemaps separately to
-      Google Search Console (see DEVIATION § E).
+- [x] Implemented via **[sitemap-images.xml](../sitemap-images.xml)** at
+      repo root — Liquid template that enumerates `site.static_files`
+      filtered to `assets/img/photos/full/`. Emits one `<image:image>`
+      per photo under a single `<url>` entry for `/photos/`. No plugin,
+      no per-page front-matter upkeep; scales as photos are added.
+- [x] Verified 2026-07-27: `_site/sitemap-images.xml` exists with 215
+      `<image:loc>` entries under `https://jozefasobkowicz.com/assets/img/photos/full/*.jpg`.
+      `sitemap: false` front-matter keeps it out of jekyll-sitemap's
+      output.
+- [ ] Update `robots.txt` to reference both sitemaps — **deferred, not
+      needed.** Superseded by the alternative below: both sitemaps
+      submitted directly to Google Search Console. Would only matter
+      for search engines other than Google, which we're not
+      prioritizing (see *Deliberate non-goals*).
+- [x] Alternative taken 2026-07-27: both sitemaps submitted separately
+      to Google Search Console (DEVIATION § E2).
 
 **Dynamic by design — no upkeep as photos come and go.** The Liquid
 template runs on every `jekyll build`, enumerates whatever's currently
@@ -102,30 +102,24 @@ re-run, no list to maintain.
 Already applied in code (nothing to do):
 
 - [x] Nav label + page heading + permalink all say "Tributes."
-- [ ] Post-cutover follow-up: the old `/messages-from-loved-ones/` URL
-      will 404. Handle via GSC removal — see DEVIATION § E.
+- [x] Post-cutover follow-up done 2026-07-27: `/messages-from-loved-ones/`
+      submitted to GSC Removals tool. See DEVIATION § E2.
 
 ### 🟡 Default `og:image` (social preview card)
 
 Currently no site-wide default. Shared links (iMessage / WhatsApp /
 Facebook / Slack previews) will show an empty card.
 
-- [ ] Choose the image. Options:
-  - One of the featured photos in [assets/img/featured/](../assets/img/featured/)
-    (`DSC_0655.jpg`, `scan0033.jpg`, `scan0022_edited.jpg`, `DSC_0802.jpg`).
-  - A dedicated crop at Open Graph's recommended 1200×630 stored as
-    `assets/img/og-default.jpg`.
-- [ ] Configure via jekyll-seo-tag by adding a `defaults` block in
-      [`_config.yml`](../_config.yml):
-      ```yaml
-      defaults:
-        - scope: { path: "" }
-          values:
-            image: /assets/img/og-default.jpg   # or a featured photo path
-      ```
-- [ ] Optional per-page override via front-matter `image: /path/to.jpg`.
-- [ ] Verify: `grep 'og:image' _site/tributes/index.html` returns a
-      populated tag; the URL resolves to a real file.
+- [x] Chose [assets/img/featured/DSC_0655.jpg](../assets/img/featured/DSC_0655.jpg)
+      — safe landscape from the featured set (no dedicated 1200×630
+      crop needed for a memorial site).
+- [x] Configured via a `defaults:` block in
+      [`_config.yml`](../_config.yml) pointing every page at
+      `/assets/img/featured/DSC_0655.jpg`.
+- [ ] Optional per-page override via front-matter `image: /path/to.jpg`
+      — mechanism in place; not currently used by any page.
+- [x] Verified 2026-07-27: all 4 built pages emit
+      `<meta property="og:image" content="https://jozefasobkowicz.com/assets/img/featured/DSC_0655.jpg">`.
 
 ### 🟡 `description:` quality audit
 
@@ -184,20 +178,33 @@ existing one:
 
 ### 🟢 Sitemap + robots.txt smoke check
 
-Post-build, pre-cutover:
+Verified 2026-07-27:
 
-- [ ] `_site/sitemap.xml` lists all 4 pages with apex URLs (no `www`,
+- [x] `_site/sitemap.xml` lists all 4 pages with apex URLs (no `www`,
       matches CNAME).
-- [ ] `_site/robots.txt` says `Sitemap: https://jozefasobkowicz.com/sitemap.xml`.
-- [ ] `_site/sitemap-images.xml` (or equivalent) exists and lists all
-      photo URLs (see NON-NEGOTIABLE above).
-- [ ] Every built page has `<link rel="canonical">`, `<meta
-      name="description">`, `<meta property="og:image">` in the head.
+- [x] `_site/robots.txt` says `Sitemap: https://jozefasobkowicz.com/sitemap.xml`.
+- [x] `_site/sitemap-images.xml` exists with 215 `<image:loc>` entries
+      (see NON-NEGOTIABLE above).
+- [x] Every built page has `<link rel="canonical">` (apex), `<meta
+      name="description">` (distinct per page), and `<meta
+      property="og:image">` in the head.
 
 ---
 
 ## Deliberate non-goals (things NOT to add)
 
+- **Server-render the tribute list to solve Giscus Soft 404** —
+  observed 2026-07-27: Google's URL Inspection classifies `/tributes/`
+  as "Soft 404" on first pass because Giscus renders inside a
+  JS-injected iframe, leaving the initial HTML nearly empty (intro
+  paragraph + placeholder div). Considered flipping
+  `messages_display` in `_config.yml` to `static` (drop the widget,
+  server-render tributes from `_data/messages.yml`) or `both`
+  (duplicate the content). **Decided to accept** — SEO on
+  `/tributes/` isn't critical for a memorial site (visitors find the
+  site by name → land on `/` → navigate). Google's JS-rendering pass
+  may reclassify + index the page asynchronously; if it hasn't after
+  ~2 weeks, revisit and switch modes.
 - **HTML redirect stub at `/messages-from-loved-ones/`** — considered;
   rejected (see Decisions above).
 - **`schema.org` JSON-LD** — see Decisions above.

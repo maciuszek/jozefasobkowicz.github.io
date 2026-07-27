@@ -72,6 +72,7 @@ exclude:
   - HANDOFF-PROMPT.md
   - HANDOFF-PROMPT-DEVIATION.md
   - staged_messages.md   # local paste-staging output from scripts/print-paste-blocks.rb
+  - photos.zip           # local NextGEN dump (git-ignored); defense-in-depth so local builds don't copy 710 MB into _site/
   - Gemfile
   - Gemfile.lock
   - vendor
