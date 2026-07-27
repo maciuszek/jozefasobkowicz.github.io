@@ -13,7 +13,7 @@ sitemap: false
   docs/seo-runbook.md for background and cutover context.
 {% endcomment %}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemaps/image/1.1">
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>{{ '/photos/' | absolute_url }}</loc>
     {%- assign photos = site.static_files

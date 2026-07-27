@@ -174,7 +174,7 @@ domain property already covers both apex + `www` — no re-registration.
 
 Run these in order after DNS resolves + HTTPS is enforced.
 
-- [ ] 👤 **Verify canonical host** — in a fresh incognito window,
+- [✓] 👤 **Verify canonical host** — in a fresh incognito window,
       request `https://www.jozefasobkowicz.com/tributes/`; confirm it
       301-redirects to `https://jozefasobkowicz.com/tributes/` and
       displays the Jekyll site.
@@ -182,7 +182,7 @@ Run these in order after DNS resolves + HTTPS is enforced.
       registered (e.g. `sitemap_index.xml`). Sitemaps → old entry →
       *Remove sitemap*. Yoast generated it dynamically; it will 404
       once WordPress is gone.
-- [ ] 👤 **Submit the new sitemap(s):**
+- [✓] 👤 **Submit the new sitemap(s):**
       `https://jozefasobkowicz.com/sitemap.xml` (pages), and
       `https://jozefasobkowicz.com/sitemap-images.xml` (photos, if
       implemented as a separate file). Sitemaps → *Add a new sitemap*.
