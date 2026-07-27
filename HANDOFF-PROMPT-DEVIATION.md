@@ -91,8 +91,11 @@ Canonical: [github-runbook.md § 5–6](docs/github-runbook.md#5-seed-the-tribut
       is git-ignored). Open it,
       then — logged in as the repo owner — copy the content INSIDE each
       fenced block and paste into the Giscus composer at
-      https://v2.jozefasobkowicz.com/tributes/ (or the final URL, once
-      cut over), one comment per block, 18 total.
+      https://jozefasobkowicz.com/tributes/, one comment per block,
+      18 total. (Historical: originally done on the transitional
+      `v2.jozefasobkowicz.com` staging subdomain, since retired
+      post-cutover. Giscus maps threads by pathname regardless of
+      hostname, so the same Discussion is now visible at the apex URL.)
 - [ ] 👤 Proofread AI translations in
       [_data/messages.yml](_data/messages.yml) — see the Translation
       Review Notes in the file's header comment. Edits made there
@@ -113,20 +116,25 @@ Canonical: [github-runbook.md § 5–6](docs/github-runbook.md#5-seed-the-tribut
 Canonical: [dns-runbook.md](docs/dns-runbook.md). Do this only after
 the temp `*.github.io` site looks right.
 
-- [ ] 👤 Pre-flight ([dns-runbook § 1](docs/dns-runbook.md#1-pre-flight)):
+- [✓] 👤 Pre-flight ([dns-runbook § 1](docs/dns-runbook.md#1-pre-flight)):
       confirm current GitHub Pages A-record IPs, back up any
       `@jozefasobkowicz.com` email you want to keep, verify
       [CNAME](CNAME) is `jozefasobkowicz.com`.
-- [ ] 👤 **Settings → Pages → Custom domain:** confirm
+- [✓] 👤 **Settings → Pages → Custom domain:** confirm
       `jozefasobkowicz.com` is set (auto-populated on first Pages
       deploy from [CNAME](CNAME)).
-- [ ] 👤 In GoDaddy DNS, replace apex records with the four GitHub
+- [✓] 👤 In GoDaddy DNS, replace apex records with the four GitHub
       Pages A records + `www` CNAME →
       [dns-runbook § 3](docs/dns-runbook.md#3-configure-godaddy-dns-records).
 - [ ] 👤 Wait for propagation; verify with `dig`.
-- [ ] 👤 **Settings → Pages → Enforce HTTPS:** tick (after cert issues).
+- [✓] 👤 **Settings → Pages → Enforce HTTPS:** tick (after cert issues).
 - [ ] 👤 Cancel GoDaddy **hosting** — keep the **domain registration**.
       Decide on email hosting first ([dns-runbook § Email hosting](docs/dns-runbook.md#email-hosting-jozefasobkowiczcom)).
+      **Cancelling hosting implicitly decommissions the WordPress backup
+      at `old.jozefasobkowicz.com`** (the cPanel/WordPress server goes
+      away). But the DNS records pointing at `107.180.26.81` persist as
+      dead pointers until manually pruned — see the DNS pruning item in
+      End-of-migration cleanup below.
 
 ### E. SEO / search visibility (post-cutover)
 
@@ -219,6 +227,15 @@ Once everything above is checked off:
       or delete. Currently tracked, kept as history.
 - [ ] 👤 Delete this file (`HANDOFF-PROMPT-DEVIATION.md`). Its purpose
       ends here.
+- [ ] 👤 **Prune the WordPress-era legacy DNS records at GoDaddy** —
+      after cancelling GoDaddy hosting (Section D above), the site at
+      `old.jozefasobkowicz.com` is implicitly dead (server gone), but
+      the 10 legacy `.old` / `_domainconnect` DNS records at the
+      registrar persist as dead pointers. Remove per
+      [dns-runbook § Cleanup backlog](docs/dns-runbook.md#cleanup-backlog-post-wordpress-decommission).
+      Post-prune the zone should have exactly 7 non-legacy records
+      (4 apex A + `www` CNAME + `TXT google-site-verification` + NS/SOA
+      as one registrar-default set). One-time task, GoDaddy DNS panel.
 - [ ] 👤 Review the AI-generated translations in
       [_data/messages.yml](_data/messages.yml) — walk through the
       *Translation review notes* section in the file's header comment

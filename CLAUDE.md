@@ -103,6 +103,12 @@ Enforce this when adding anything new. Do NOT restate; link.
   a redundant email invite is dropped. `contact_email` still shows in
   the footer for general contact. If the discussion is ever formally
   locked, revisit whether an email invite belongs back on the page.
+- **DNS: `www CNAME → maciuszek.github.io.`** (NOT `www CNAME →
+  jozefasobkowicz.com`). Reason: GitHub's anycast CDN resolves by
+  hostname, so `www` survives GitHub IP rotations without needing our
+  DNS to change. Full three-point reasoning +
+  alternative-considered-but-rejected in
+  [docs/dns-runbook.md § DECISION — www CNAME target](docs/dns-runbook.md#decision--www-cname-target).
 - **SEO pre-cutover work done, 2026-07-27** — apex canonical URL,
   dynamic image sitemap at [sitemap-images.xml](sitemap-images.xml)
   (215 entries), default `og:image` via `defaults:` block in
@@ -137,25 +143,38 @@ Snapshot (as of last audit; verify against DEVIATION file):
 - Repo: `maciuszek/jozefasobkowicz.github.io` — a project site (owner
   already had `maciuszek.github.io` reserved), served via GitHub Actions
   build of Jekyll.
-- Currently deployed and reachable at `https://v2.jozefasobkowicz.com/`
-  (transitional custom subdomain used for staging + tribute seeding).
-- Cutover pending: apex `jozefasobkowicz.com` + `www` still point to
-  WordPress on GoDaddy. When cut over, `CNAME` file (already tracked)
-  will make the Pages custom domain the apex, and `v2.` subdomain can
-  be removed or kept as an alias.
+- **Main site: `https://jozefasobkowicz.com/`** — apex, GitHub Pages.
+  `https://www.jozefasobkowicz.com/…` HTTP 301-redirects to the apex.
+- **Backup path: `http://old.jozefasobkowicz.com/`** (also
+  `http://www.old.jozefasobkowicz.com/` — WordPress's own canonical
+  form) — the original WordPress site, still served from GoDaddy
+  cPanel at `107.180.26.81`. Kept as a fallback during the migration
+  window so anyone with a stale bookmark or in-flight search-engine
+  index still reaches something. Serves over `http://` only (no TLS
+  cert for the `old.` subdomain — expected). Scheduled for
+  decommissioning + DNS cleanup once search engines have re-indexed
+  and nobody's relying on it.
 - Tributes seeded to the GitHub Discussion. Announcement category =
   maintainer-only thread creation; no formal per-thread lock (see
   decisions above).
 - Remaining migration work:
-  - Section D of DEVIATION: apex DNS switchover, HTTPS enforcement,
-    cancel GoDaddy hosting.
-  - Section E2 of DEVIATION: post-cutover Google Search Console work
-    (submit sitemap + image sitemap, request indexing, remove outdated
-    content — the old `/blog/`, `/messages-from-loved-ones/`, and
-    NextGEN image paths).
-  - End-of-migration cleanup section: review AI translations, remove
-    direnv config, fill Recorded values, decide fate of
+  - DEVIATION § D final step: cancel GoDaddy **hosting** (keep the
+    **domain registration**). Once hosting is cancelled, the `old.`
+    subdomain also becomes dead — then the associated legacy DNS
+    records get pruned per
+    [dns-runbook § Cleanup backlog](docs/dns-runbook.md#cleanup-backlog-post-wordpress-decommission).
+  - DEVIATION § E2: post-cutover Google Search Console work (submit
+    sitemap + image sitemap, request indexing, remove outdated content
+    — the old `/blog/`, `/messages-from-loved-ones/`, and NextGEN
+    image paths).
+  - DEVIATION § End-of-migration cleanup: review AI translations,
+    remove direnv config, fill Recorded values, decide fate of
     `HANDOFF-PROMPT.md`, optional Giscus OAuth revocation.
   - Optional future tweaks: favicon variations + 4 deferred SEO
     improvements (see the *Future tweaks* section at the end of the
     DEVIATION file).
+- **Historical: v2 subdomain retired.** `v2.jozefasobkowicz.com` was
+  used as a transitional staging URL during pre-cutover testing and
+  tribute seeding. Its CNAME record was removed at cutover; the URL
+  no longer resolves. If you see it referenced in docs, that's
+  historical context, not current state.
